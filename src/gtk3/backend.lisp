@@ -11,4 +11,3 @@
     (cffi:load-foreign-library-error (condition)
       (declare (ignore condition))
       (error 'cluiless:backend-error))))
-   

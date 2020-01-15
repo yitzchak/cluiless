@@ -15,19 +15,22 @@
       :components
         ((:file "packages")
          (:file "backend")
+         (:module lib
+          :serial t
+          :components
+            ((:module gtk3
+              :serial t
+              :components
+                ((:file "base")))))
          (:module gtk3
-          :serial t
-          :components
-            ((:file "cffi")
-             (:file "backend")))
-         (:module darwin
-          :serial t
-          :components
-            ((:file "cffi")
-             (:file "backend")))
-         (:module win32
-          :serial t
-          :components
-            ((:file "cffi")
-             (:file "backend")))))))
-
+            :serial t
+            :components
+              ((:file "backend")))
+           (:module darwin
+            :serial t
+            :components
+              ((:file "backend")))
+           (:module win32
+            :serial t
+            :components
+              ((:file "backend")))))))
