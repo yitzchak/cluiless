@@ -8,7 +8,8 @@
     #:alexandria
     #:cffi
     #:closer-mop
-    #:trivial-garbage)
+    #:trivial-garbage
+    #:trivial-main-thread)
   :components
     ((:module src
       :serial t
@@ -21,7 +22,9 @@
             ((:module gtk3
               :serial t
               :components
-                ((:file "base")))))
+                ((:file "base")
+                 (:cffi-grovel-file "grovel")
+                 (:file "application")))))
          (:module gtk3
             :serial t
             :components
