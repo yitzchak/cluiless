@@ -15,20 +15,18 @@
       :serial t
       :components
         ((:file "packages")
+         (:file "object")
          (:file "backend")
-         (:module lib
-          :serial t
-          :components
-            ((:module gtk3
-              :serial t
-              :components
-                ((:file "base")
-                 (:cffi-grovel-file "grovel")
-                 (:file "application")))))
          (:module gtk3
             :serial t
             :components
-              ((:file "backend")))
+              ((:module lib
+                :serial t
+                :components
+                  ((:file "base")
+                   (:cffi-grovel-file "grovel")
+                   (:file "application")))
+               (:file "backend")))
            (:module darwin
             :serial t
             :components
