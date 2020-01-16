@@ -15,8 +15,7 @@
       :serial t
       :components
         ((:file "packages")
-         (:file "object")
-         (:file "backend")
+         (:file "application")
          (:module gtk3
             :serial t
             :components
@@ -26,12 +25,12 @@
                   ((:file "base")
                    (:cffi-grovel-file "grovel")
                    (:file "application")))
-               (:file "backend")))
-           (:module darwin
+               (:file "application")))
+           (:module cocoa
             :serial t
             :components
-              ((:file "backend")))
+              ((:file "application")))
            (:module win32
             :serial t
             :components
-              ((:file "backend")))))))
+              ((:file "application")))))))

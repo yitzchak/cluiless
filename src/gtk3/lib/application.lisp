@@ -5,11 +5,11 @@
   (flags g-application-flags))
 
 (cffi:defcfun ("gtk_application_add_window" :library gtk3) :void
-  (application cluiless:object-handle)
+  (application object-handle)
   (window :pointer))
 
 (cffi:defcfun ("gtk_application_remove_window" :library gtk3) :void
-  (application cluiless:object-handle)
+  (application object-handle)
   (window :pointer))
 
 
