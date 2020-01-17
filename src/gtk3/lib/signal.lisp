@@ -10,5 +10,5 @@
 
 (cffi:defcfun ("g_signal_handler_disconnect" :library glib2) :void
   (instance object-handle)
-  (gulong hander-id))
+  (hander-id gulong))
 

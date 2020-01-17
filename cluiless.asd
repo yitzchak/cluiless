@@ -25,6 +25,7 @@
                   ((:file "base")
                    (:cffi-grovel-file "grovel")
                    (:file "object")
+                   (:file "signal")
                    (:file "application")))
                (:file "application")))
            (:module cocoa
