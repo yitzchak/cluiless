@@ -4,6 +4,8 @@
 
 (include "gtk/gtk.h")
 
+(ctype gulong "gulong")
+
 (cenum (g-application-flags :base-type :unsigned-int)
   ((:none "G_APPLICATION_FLAGS_NONE"))
   ((:is-service "G_APPLICATION_IS_SERVICE"))
@@ -14,3 +16,8 @@
   ((:can-override-app-id "G_APPLICATION_CAN_OVERRIDE_APP_ID"))
   ((:allow-replacement "G_APPLICATION_ALLOW_REPLACEMENT"))
   ((:replace "G_APPLICATION_REPLACE")))
+
+(cenum (g-connect-flags :base-type :unsigned-int)
+  ((:after "G_CONNECT_AFTER"))
+  ((:swapped "G_CONNECT_SWAPPED")))
+

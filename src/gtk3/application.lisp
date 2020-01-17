@@ -21,5 +21,5 @@
   (setf (handle instance) (gtk-application-new (getf initargs :name) :none)))
 
 (defmethod cluiless:run ((instance application))
-  (trivial-main-thread:with-body-in-main-thread
-    (g-application-run instance)))
+  (trivial-main-thread:with-body-in-main-thread ()
+    (g-application-run instance 0 (cffi:null-pointer))))
