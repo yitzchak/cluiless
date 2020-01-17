@@ -24,6 +24,7 @@
                 :components
                   ((:file "base")
                    (:cffi-grovel-file "grovel")
+                   (:file "object")
                    (:file "application")))
                (:file "application")))
            (:module cocoa

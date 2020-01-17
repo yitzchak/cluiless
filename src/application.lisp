@@ -23,4 +23,4 @@
           (backend-error (condition)
             (declare (ignore condition))))))))
 
-
+(defgeneric run (instance))

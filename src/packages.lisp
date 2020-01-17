@@ -4,6 +4,7 @@
      #:backend-error
      #:*application-classes*
      #:application
+     #:run
      #:make-application))
 
 (defpackage #:cluiless/cocoa

@@ -3,17 +3,13 @@
 (cffi:define-foreign-library gtk3
   (t (:default "libgtk-3")))
 
-(defclass object ()
-  ((handle
-     :accessor handle
-     :initarg :handle)))
+(cffi:define-foreign-library glib2
+  (T (:default "libglib-2.0")))
 
-(cffi:define-foreign-type object-handle ()
-  ()
-  (:actual-type :pointer)
-  (:simple-parser object-handle))
+(cffi:define-foreign-library gio2
+  (T (:default "libgio-2.0")))
 
-(defmethod cffi:translate-to-foreign (value (type object-handle))
-  (declare (ignore type))
-  (handle value))
-     
+(cffi:define-foreign-library gmodule2
+  (T (:default "libgmodule-2.0")))
+
+
