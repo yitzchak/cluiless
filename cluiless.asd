@@ -8,6 +8,7 @@
     #:alexandria
     #:cffi
     #:closer-mop
+    #:float-features
     #:trivial-garbage
     #:trivial-main-thread)
   :components
@@ -15,7 +16,10 @@
       :serial t
       :components
         ((:file "packages")
+         (:file "core")
          (:file "application")
+         (:file "widget")
+         (:file "window")
          (:module gtk3
             :serial t
             :components
@@ -26,8 +30,11 @@
                    (:cffi-grovel-file "grovel")
                    (:file "object")
                    (:file "signal")
-                   (:file "application")))
-               (:file "application")))
+                   (:file "application")
+                   (:file "widget")
+                   (:file "window")))
+               (:file "application")
+               (:file "window")))
            (:module cocoa
             :serial t
             :components

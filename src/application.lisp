@@ -8,7 +8,7 @@
 
 (defclass application () ())
 
-(defmethod initalize-instance :after ((instance application) &rest initargs &key &allow-other-keys)
+(defmethod initialize-instance :after ((instance application) &rest initargs &key &allow-other-keys)
   (declare (ignore initargs))
   (setq *application* instance))
 
@@ -24,3 +24,6 @@
             (declare (ignore condition))))))))
 
 (defgeneric run (instance))
+
+(defgeneric activate (instance))
+

@@ -5,7 +5,14 @@
      #:*application-classes*
      #:application
      #:run
-     #:make-application))
+     #:activate
+     #:make-application
+     #:make-window
+     #:ui-metaclass
+     #:do-make-window
+     #:visible
+     #:title
+     #:window))
 
 (defpackage #:cluiless/cocoa
   (:use #:alexandria #:cl)
