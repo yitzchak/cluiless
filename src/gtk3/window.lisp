@@ -8,10 +8,6 @@
   (declare (ignore initargs))
   (setf (handle instance) (gtk-application-window-new cluiless::*application*)))
 
-(defmethod cluiless:do-make-window ((application-instance application) &rest initargs &key &allow-other-keys)
-  (declare (ignore application-instance))
-  (apply #'make-instance 'window initargs))
-
 (defmethod closer-mop:slot-value-using-class ((class cluiless:ui-metaclass) (instance window) (slot closer-mop:standard-effective-slot-definition))
   (if (eql :ui-instance (closer-mop:slot-definition-allocation slot))
     (switch ((closer-mop:slot-definition-name slot) :test #'equal)

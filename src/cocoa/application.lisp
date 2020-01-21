@@ -3,7 +3,7 @@
 (defclass application (cluiless:application)
   ())
 
-(push '(:cocoa . application) cluiless:*application-classes*)
+(cluiless:defbackend :cocoa cluiless/cocoa)
 
 (defmethod initialize-instance :before ((instance application) &rest initargs &key &allow-other-keys)
   (declare (ignore initargs))

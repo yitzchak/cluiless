@@ -3,7 +3,7 @@
 (defclass application (cluiless:application object)
   ())
 
-(push '(:gtk3 . application) cluiless:*application-classes*)
+(cluiless:defbackend :gtk3 cluiless/gtk3)
 
 (cffi:defcallback application-activate-callback :void ((application object-handle) (data :pointer))
   (declare (ignore data))

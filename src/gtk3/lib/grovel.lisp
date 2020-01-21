@@ -1,6 +1,6 @@
 (in-package #:cluiless/gtk3)
 
-(pkg-config-cflags "gtk+-3.0")
+(pkg-config-cflags "gtk+-3.0" :optional t)
 
 (include "gtk/gtk.h")
 

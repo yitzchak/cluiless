@@ -35,11 +35,18 @@
                    (:file "window")))
                (:file "application")
                (:file "window")))
+           #+darwin
            (:module cocoa
             :serial t
             :components
               ((:file "application")))
-           (:module win32
+           #+win32
+           (:module windows
             :serial t
             :components
-              ((:file "application")))))))
+              ((:module lib
+                :serial t
+                :components
+                  ((:file "base")
+                   (:cffi-grovel-file "grovel")))
+               (:file "application")))))))

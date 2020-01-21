@@ -1,9 +1,9 @@
-(in-package :cluiless/win32)
+(in-package :cluiless/windows)
 
 (defclass application (cluiless:application)
   ())
 
-(push '(:win32 . application) cluiless:*application-classes*)
+(cluiless:defbackend :windows cluiless/windows)
 
 (defmethod initialize-instance :before ((instance application) &rest initargs &key &allow-other-keys)
   (declare (ignore initargs))

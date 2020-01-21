@@ -5,6 +5,11 @@
 
 (defparameter *application-classes* nil)
 (defparameter *application* nil)
+(defparameter *backends* nil)
+(defparameter *backend* nil)
+
+(defmacro defbackend (name pkg)
+  `(push (cons (quote ,name) (quote ,pkg)) *backends*))
 
 (defclass application () ())
 
@@ -12,18 +17,27 @@
   (declare (ignore initargs))
   (setq *application* instance))
 
-(defun make-application (&rest initargs &key backend &allow-other-keys)
-  (if backend
-    (let ((application-class (assoc backend *application-classes*)))
-      (when application-class
-        (apply #'make-instance (cdr application-class) initargs)))
-    (or *application*
-      (dolist (application-class (mapcar #'cdr *application-classes*))
-        (handler-case (return (apply #'make-instance application-class initargs))
-          (backend-error (condition)
-            (declare (ignore condition))))))))
+(defun make-cluiless-instance (name initargs &key (backend *backend*))
+  (apply #'make-instance (find-symbol name (cdr backend)) initargs))
+
+(defun make-application (&rest initargs &key backends &allow-other-keys)
+  (or *application*
+    (dolist (candidate (if backends
+                         (mapcan (lambda (name)
+                                   (when-let ((c (assoc name *backends*)))
+                                     (list c)))
+                           backends)
+                         *backends*))
+      (handler-case
+        (let ((app (make-cluiless-instance "APPLICATION" initargs :backend candidate)))
+          (setq *backend* candidate)
+          (return app))
+        (backend-error (condition)
+          (declare (ignore condition)))))))
 
 (defgeneric run (instance))
 
 (defgeneric activate (instance))
+
+
 
