@@ -21,6 +21,7 @@
          (:file "widget")
          (:file "window")
          (:module gtk3
+          :if-feature :unix
             :serial t
             :components
               ((:cffi-grovel-file "probe")
