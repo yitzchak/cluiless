@@ -15,7 +15,7 @@
     ((:module src
       :serial t
       :components
-        ((:file "packages")
+        ((:file "package")
          (:file "core")
          (:file "application")
          (:file "widget")
@@ -23,7 +23,9 @@
          (:module gtk3
             :serial t
             :components
-              ((:module lib
+              ((:cffi-grovel-file "probe")
+               (:file "package")
+               (:module lib
                 :serial t
                 :components
                   ((:file "base")
@@ -35,16 +37,18 @@
                    (:file "window")))
                (:file "application")
                (:file "window")))
-           #+darwin
            (:module cocoa
+            :if-feature :darwin
             :serial t
             :components
-              ((:file "application")))
-           #+win32
+              ((:file "package")
+               (:file "application")))
            (:module windows
+            :if-feature :win32
             :serial t
             :components
-              ((:module lib
+              ((:file "package")
+               (:module lib
                 :serial t
                 :components
                   ((:file "base")
