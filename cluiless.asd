@@ -53,5 +53,8 @@
               :serial t
               :components
                 ((:file "base")
-                 (:cffi-grovel-file "grovel")))
+                 (:cffi-grovel-file "grovel")
+                 (:file "kernel")
+                 (:file "window")))
              (:file "application")))))))
+
