@@ -12,7 +12,6 @@
   (def-window-proc-w instance msg w-param l-param))
 
 (defmethod initialize-instance :before ((instance window) &rest initargs &key &allow-other-keys)
-  (declare (ignore initargs))
   (unless (slot-boundp instance 'class-atom)
     (setf (class-atom instance)
       (register-class-ex-w
@@ -32,7 +31,7 @@
       ('cluiless:visible
         (is-window-visible instance))
       ('cluiless:title
-        (cffi:with-foreign-pointer-as-string (buf (1+ (get-window-length-w instance)) :size-var len :encoding :utf-16)
+        (cffi:with-foreign-pointer-as-string (buf (1+ (get-window-text-length-w instance)) :size-var len :encoding :utf-16)
           (get-window-text-w instance buf len)))
       (t
         (call-next-method)))

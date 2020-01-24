@@ -12,6 +12,9 @@
   (:actual-type :pointer)
   (:simple-parser object-handle))
 
+(defmethod handle ((instance (eql nil)))
+  (cffi:null-pointer))
+
 (defmethod cffi:translate-to-foreign (value (type object-handle))
   (declare (ignore type))
   (handle value))
