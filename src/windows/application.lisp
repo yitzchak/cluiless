@@ -15,7 +15,7 @@
   (trivial-main-thread:with-body-in-main-thread ()
     (float-features:with-float-traps-masked t
       (cluiless:activate instance)
-      (cffi:with-foreign-object (m 'msg)
+      (cffi:with-foreign-object (m '(:struct msg))
       (do ()
           ((get-message-w m (cffi:null-pointer) 0 0))
         (translate-message m)

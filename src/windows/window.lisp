@@ -31,7 +31,7 @@
       ('cluiless:visible
         (is-window-visible instance))
       ('cluiless:title
-        (cffi:with-foreign-pointer-as-string (buf (1+ (get-window-text-length-w instance)) len :encoding :utf-16)
+        (cffi:with-foreign-pointer-as-string ((buf len) (1+ (get-window-text-length-w instance)) :encoding :utf-16)
           (get-window-text-w instance buf len)))
       (t
         (call-next-method)))
