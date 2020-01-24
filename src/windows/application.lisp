@@ -17,8 +17,7 @@
       (cluiless:activate instance)
       (cffi:with-foreign-object (m '(:struct msg))
       (do ((status (get-message-w m (cffi:null-pointer) 0 0) (get-message-w m (cffi:null-pointer) 0 0)))
-          ((not (zerop status)))
-        (when (plusp status)
-          (translate-message m)
-          (dispatch-message-w m)))))))
+          ((< status 1))
+        (translate-message m)
+        (dispatch-message-w m))))))
 

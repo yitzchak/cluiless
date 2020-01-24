@@ -9,7 +9,9 @@
   (:metaclass cluiless:ui-metaclass))
 
 (cffi:defcallback window-proc-callback lresult ((instance object-handle) (msg :uint) (w-param wparam) (l-param lparam))
-  (def-window-proc-w instance msg w-param l-param))
+  (if (= 2 msg)
+    (post-quit-message 0)
+    (def-window-proc-w instance msg w-param l-param)))
 
 (defmethod initialize-instance :before ((instance window) &rest initargs &key &allow-other-keys)
   (unless (slot-boundp instance 'class-atom)

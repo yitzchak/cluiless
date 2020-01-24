@@ -17,14 +17,16 @@
 
 (defmethod cffi:translate-to-foreign (value (type object-handle))
   (declare (ignore type))
+  value)
+
+(defmethod cffi:translate-to-foreign ((value object) (type object-handle))
+  (declare (ignore type))
   (handle value))
 
 (defmethod cffi:translate-from-foreign (value (type object-handle))
   (declare (ignore type))
-  (gethash (cffi:pointer-address value) *objects*))
+  (or (gethash (cffi:pointer-address value) *objects*)) value)
 
-(defmethod initialize-instance :after ((instance object) &rest initargs &key &allow-other-keys)
-  (declare (ignore initargs))
-  (when-let ((handle (handle instance)))
-    (setf (gethash (cffi:pointer-address handle) *objects*) instance)))
+(defmethod (setf handle) :after (value (instance object))
+  (setf (gethash (cffi:pointer-address value) *objects*) instance))
         

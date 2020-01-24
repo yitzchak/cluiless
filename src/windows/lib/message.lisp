@@ -25,4 +25,5 @@
 (cffi:defcfun ("DispatchMessageW" :library user32) lresult
   (msg :pointer))
 
-
+(cffi:defcfun ("PostQuitMessage" :library user32) :void
+  (exit-code :int))
