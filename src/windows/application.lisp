@@ -11,3 +11,12 @@
     (error 'cluiless:backend-error))
   (cluiless:load-backend-libraries 'user32 'kernel32))
 
+(defmethod cluiless:run ((instance application))
+  (trivial-main-thread:with-body-in-main-thread ()
+    (float-features:with-float-traps-masked t
+      (cffi:with-foreign-object (m 'msg)
+      (do ()
+          ((get-message-w m (cffi:null-pointer) 0 0))
+        (translate-message m)
+        (dispatch-message-w m)))))
+

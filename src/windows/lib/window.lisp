@@ -18,10 +18,10 @@
   (classexw wndclassexw))
 
 (cffi:defcfun ("CreateWindowExW" :library user32) :pointer
-  (ex-style dword)
+  (ex-style window-style-ex)
   (class-name wstring)
   (window-name wstring)
-  (style dword)
+  (style window-style)
   (x :int)
   (y :int)
   (width :int)
@@ -31,3 +31,21 @@
   (instance :pointer)
   (param :pointer))
 
+(cffi:defcfun ("GetWindowTextLengthW" :library user32) :int
+  (window object-handle))
+
+(cffi:defcfun ("GetWindowTextW" :library user32) :int
+  (window object-handle)
+  (buf :pointer)
+  (max-count :int))
+
+(cffi:defcfun ("IsWindowVisible" :library user32) :boolean
+  (window object-handle))
+
+(cffi:defcfun ("SetWindowTextW" :library user32) :boolean
+  (window object-handle)
+  (value wstring))
+
+(cffi:defcfun ("ShowWindow" :library user32) :boolean
+  (window object-handle)
+  (cmd-show show-window-cmd))

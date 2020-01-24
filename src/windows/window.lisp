@@ -8,7 +8,8 @@
      :allocation :class))
   (:metaclass cluiless:ui-metaclass))
 
-(cffi:defcallback window-proc-callback lresult ((instance object-handle) (msg :uint) (w-param wparam) (l=param lparam)))
+(cffi:defcallback window-proc-callback lresult ((instance object-handle) (msg :uint) (w-param wparam) (l-param lparam))
+  0)
 
 (defmethod initialize-instance :before ((instance window) &rest initargs &key &allow-other-keys)
   (declare (ignore initargs))
@@ -19,15 +20,21 @@
          :class-name +window-class-name+
          :wnd-proc (cffi:callback window-proc-callback)
          :instance (get-module-handle-w (cffi:null-pointer)))))))
-;  (setf (handle instance) (gtk-application-window-new cluiless::*application*)))
+  (setf (handle instance)
+    (create-window-ex-w nil +window-class-name+ (getf initargs :title) :overalapped-window
+      10 10 100 100
+      (cffi:null-pointer) (cffi:null-pointer)
+      (get-module-handle-w (cffi:null-pointer))
+      (cffi:null-pointer))))
 
 (defmethod closer-mop:slot-value-using-class ((class cluiless:ui-metaclass) (instance window) (slot closer-mop:standard-effective-slot-definition))
   (if (eql :ui-instance (closer-mop:slot-definition-allocation slot))
     (switch ((closer-mop:slot-definition-name slot) :test #'equal)
-;      ('cluiless:visible
-;        (gtk-widget-get-visible instance))
-;      ('cluiless:title
-;        (gtk-window-get-title instance))
+      ('cluiless:visible
+        (is-window-visible instance))
+      ('cluiless:title
+        (cffi:with-foreign-pointer-as-string (buf (1+ (get-window-length-w instance)) :size-var len :encoding :utf-16)
+          (get-window-text-w instance buf len)))
       (t
         (call-next-method)))
     (call-next-method)))
@@ -35,10 +42,10 @@
 (defmethod (setf closer-mop:slot-value-using-class) (new-value (class cluiless:ui-metaclass) (instance window) (slot closer-mop:standard-effective-slot-definition))
   (if (eql :ui-instance (closer-mop:slot-definition-allocation slot))
     (switch ((closer-mop:slot-definition-name slot) :test #'equal)
-;      ('cluiless:visible
-;        (gtk-widget-set-visible instance new-value))
-;      ('cluiless:title
-;        (gtk-window-set-title instance new-value))
+      ('cluiless:visible
+        (show-window instance (if new-value :show :hide)))
+      ('cluiless:title
+        (set-window-text-w instance new-value))
       (t
         (call-next-method)))
     (call-next-method)))

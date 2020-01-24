@@ -56,6 +56,7 @@
                  (:cffi-grovel-file "grovel")
                  (:file "object")
                  (:file "kernel")
+                 (:file "message")
                  (:file "window")))
              (:file "application")
              (:file "window")))))))
