@@ -40,7 +40,7 @@
   ((:no-activate "WS_EX_NOACTIVATE"))
   ((:no-inherit-layour "WS_EX_NOINHERITLAYOUT"))
   ((:no-parent-notify "WS_EX_NOPARENTNOTIFY"))
-  ((:no-redirection-bitmap "WS_EX_NOREDIRECTIONBITMAP"))
+;  ((:no-redirection-bitmap "WS_EX_NOREDIRECTIONBITMAP"))
   ((:overlapped-window "WS_EX_OVERLAPPEDWINDOW"))
   ((:pallete-window "WS_EX_PALETTEWINDOW"))
   ((:right "WS_EX_RIGHT"))

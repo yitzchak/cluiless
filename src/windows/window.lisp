@@ -20,7 +20,7 @@
               :wnd-proc (cffi:callback window-proc-callback)
               :instance (get-module-handle-w (cffi:null-pointer))))))
   (setf (handle instance)
-    (create-window-ex-w nil +window-class-name+ (getf initargs :title) :overalapped-window
+    (create-window-ex-w nil +window-class-name+ (getf initargs :title) :overlapped-window
       10 10 100 100
       (cffi:null-pointer) (cffi:null-pointer)
       (get-module-handle-w (cffi:null-pointer))
