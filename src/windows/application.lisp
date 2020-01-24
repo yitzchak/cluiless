@@ -16,8 +16,9 @@
     (float-features:with-float-traps-masked t
       (cluiless:activate instance)
       (cffi:with-foreign-object (m '(:struct msg))
-      (do ()
-          ((get-message-w m (cffi:null-pointer) 0 0))
-        (translate-message m)
-        (dispatch-message-w m))))))
+      (do ((status (get-message-w m (cffi:null-pointer) 0 0) (get-message-w m (cffi:null-pointer) 0 0)))
+          ((not (zerop status)))
+        (when (plusp status)
+          (translate-message m)
+          (dispatch-message-w m)))))))
 

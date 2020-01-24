@@ -13,13 +13,13 @@
   (pt (:struct point))
   (private dword))
 
-(cffi:defcfun ("GetMessageW" :library user32) :boolean
+(cffi:defcfun ("GetMessageW" :library user32) :int
   (msg :pointer)
   (window :pointer)
   (filter-min :uint)
   (filter-max :uint))
 
-(cffi:defcfun ("TranslateMessage" :library user32) :boolean
+(cffi:defcfun ("TranslateMessage" :library user32) :int
   (msg :pointer))
 
 (cffi:defcfun ("DispatchMessageW" :library user32) lresult
