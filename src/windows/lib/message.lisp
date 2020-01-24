@@ -10,7 +10,7 @@
   (w-param wparam)
   (l-param lparam)
   (time dword)
-  (pt point)
+  (pt (:struct point))
   (private dword))
 
 (cffi:defcfun ("GetMessageW" :library user32) :boolean
