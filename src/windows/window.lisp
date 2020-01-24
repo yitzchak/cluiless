@@ -10,7 +10,9 @@
 
 (cffi:defcallback window-proc-callback lresult ((instance object-handle) (msg :uint) (w-param wparam) (l-param lparam))
   (if (= 2 msg)
-    (post-quit-message 0)
+    (progn
+      (post-quit-message 0)
+      0)
     (def-window-proc-w instance msg w-param l-param)))
 
 (defmethod initialize-instance :before ((instance window) &rest initargs &key &allow-other-keys)
