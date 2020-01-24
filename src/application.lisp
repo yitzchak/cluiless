@@ -39,5 +39,13 @@
 
 (defgeneric activate (instance))
 
+(defun load-backend-libraries (&rest libraries)
+  (dolist (library libraries)
+    (unless (cffi:foreign-library-loaded-p library)
+      (handler-case
+        (cffi:load-foreign-library library)
+        (cffi:load-foreign-library-error (condition)
+          (declare (ignore condition))
+          (error 'cluiless:backend-error))))))
 
 

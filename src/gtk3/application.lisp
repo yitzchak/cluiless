@@ -10,18 +10,7 @@
   (cluiless:activate application))
 
 (defmethod initialize-instance :before ((instance application) &rest initargs &key &allow-other-keys)
-  (unless (cffi:foreign-library-loaded-p 'gtk3)
-    (handler-case
-      (cffi:load-foreign-library 'gtk3)
-      (cffi:load-foreign-library-error (condition)
-        (declare (ignore condition))
-        (error 'cluiless:backend-error))))
-  (unless (cffi:foreign-library-loaded-p 'glib2)
-    (handler-case
-      (cffi:load-foreign-library 'glib2)
-      (cffi:load-foreign-library-error (condition)
-        (declare (ignore condition))
-        (error 'cluiless:backend-error))))
+  (cluiless:load-backend-libraries 'gtk3 'glib2)
   (setf (handle instance) (gtk-application-new (getf initargs :name) nil)))
 
 (defmethod initialize-instance :after ((instance application) &rest initargs &key &allow-other-keys)

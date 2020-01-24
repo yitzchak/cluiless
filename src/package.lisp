@@ -4,6 +4,7 @@
      #:backend-error
      #:application
      #:run
+     #:load-backend-libraries
      #:activate
      #:make-application
      #:make-window
