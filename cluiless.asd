@@ -54,7 +54,9 @@
               :components
                 ((:file "base")
                  (:cffi-grovel-file "grovel")
+                 (:file "object")
                  (:file "kernel")
                  (:file "window")))
-             (:file "application")))))))
+             (:file "application")
+             (:file "window")))))))
 

@@ -2,9 +2,12 @@
 
 (include "windows.h")
 
+(ctype dword "DWORD")
+(ctype lparam "LPARAM")
+(ctype lresult "LRESULT")
 (ctype win-atom "ATOM")
 (ctype word "WORD")
-(ctype dword "DWORD")
+(ctype wparam "WPARAM")
 
 (bitfield (class-style :base-type :unsigned-int)
   ((:byte-align-client "CS_BYTEALIGNCLIENT"))
