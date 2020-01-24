@@ -45,6 +45,12 @@
   (instance :pointer)
   (param :pointer))
 
+(cffi:defcfun ("DefWindowProcW" :library user32) lresult
+  (window object-handle)
+  (msg :uint)
+  (w-param wparam)
+  (l-param lparam))
+
 (cffi:defcfun ("GetWindowTextLengthW" :library user32) :int
   (window object-handle))
 
