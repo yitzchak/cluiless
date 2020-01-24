@@ -1,6 +1,6 @@
 (in-package #:cluiless/windows)
 
-(cffi:defcstruct wndclassexw :class wnd-class-ex-w
+(cffi:defcstruct wndclassexw
   (:size :uint)
   (:style class-style)
   (:wnd-proc :pointer)
@@ -13,6 +13,11 @@
   (:menu-name wstring)
   (:class-name wstring)
   (:icon-sm :pointer))
+
+(cffi:define-foreign-type wnd-class-ex-w ()
+  ()
+  (:actual-type :pointer)
+  (:simple-parser wnd-class-ex-w))
 
 (defmethod cffi:translate-to-foreign (value (type wnd-class-ex-w))
   (cffi:foreign-alloc '(:struct wndclassexw)
