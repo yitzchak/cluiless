@@ -14,9 +14,10 @@
 (defmethod cluiless:run ((instance application))
   (trivial-main-thread:with-body-in-main-thread ()
     (float-features:with-float-traps-masked t
+      (cluiless:activate instance)
       (cffi:with-foreign-object (m 'msg)
       (do ()
           ((get-message-w m (cffi:null-pointer) 0 0))
         (translate-message m)
-        (dispatch-message-w m)))))
+        (dispatch-message-w m))))))
 

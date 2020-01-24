@@ -23,7 +23,7 @@
   ((:save-bits "CS_SAVEBITS"))
   ((:vredraw "CS_VREDRAW")))
 
-(bitfield (window-style-ex :base-type dword)
+(bitfield (window-style-ex :base-type :uint32)
   ((:accept-files "WS_EX_ACCEPTFILES"))
   ((:app-window "WS_EX_APPWINDOW"))
   ((:client-edge "WS_EX_CLIENTEDGE"))
@@ -52,7 +52,7 @@
   ((:transparent "WS_EX_TRANSPARENT"))
   ((:window-edge "WS_EX_WINDOWEDGE")))
 
-(bitfield (window-style :base-type dword)
+(bitfield (window-style :base-type :uint32)
   ((:border "WS_BORDER"))
   ((:caption "WS_CAPTION"))
   ((:child "WS_CHILD"))

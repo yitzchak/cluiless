@@ -8,3 +8,7 @@
 
 (cffi:defctype wstring (:string :encoding :utf-16))
 
+(defmethod cffi:translate-name-from-foreign ((spec string) (package (eql *package*)) &optional varp)
+  (let ((name (cffi:translate-camelcase-name spec)))
+    (if varp (intern (format nil "*~a*" name)) name)))
+

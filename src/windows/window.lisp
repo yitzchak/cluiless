@@ -1,4 +1,4 @@
-(in-package #:cluiless/window)
+(in-package #:cluiless/windows)
 
 (defparameter +window-class-name+ "cluiless/window")
 
@@ -16,10 +16,9 @@
   (unless (slot-boundp instance 'class-atom)
     (setf (class-atom instance)
       (register-class-ex-w
-        (:size (cffi:foreign-type-size 'wndclassexw)
-         :class-name +window-class-name+
-         :wnd-proc (cffi:callback window-proc-callback)
-         :instance (get-module-handle-w (cffi:null-pointer)))))))
+        (list :class-name +window-class-name+
+              :wnd-proc (cffi:callback window-proc-callback)
+              :instance (get-module-handle-w (cffi:null-pointer))))))
   (setf (handle instance)
     (create-window-ex-w nil +window-class-name+ (getf initargs :title) :overalapped-window
       10 10 100 100

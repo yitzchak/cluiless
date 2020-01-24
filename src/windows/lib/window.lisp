@@ -1,6 +1,6 @@
 (in-package #:cluiless/windows)
 
-(cffi:defcstruct wndclassexw
+(cffi:defcstruct wndclassexw :class wnd-class-ex-w
   (:size :uint)
   (:style class-style)
   (:wnd-proc :pointer)
@@ -14,8 +14,17 @@
   (:class-name wstring)
   (:icon-sm :pointer))
 
+(defmethod cffi:translate-to-foreign (value (type wnd-class-ex-w))
+  (cffi:foreign-alloc '(:struct wndclassexw)
+    :initial-element
+      (append (list :size (cffi:foreign-type-size '(:struct wndclassexw))) value)))
+
+(defmethod cffi:free-translated-object (pointer (type wnd-class-ex-w) param)
+  (declare (ignore param))
+  (cffi:foreign-free pointer))
+
 (cffi:defcfun ("RegisterClassExW" :library user32) win-atom
-  (classexw wndclassexw))
+  (classexw wnd-class-ex-w))
 
 (cffi:defcfun ("CreateWindowExW" :library user32) :pointer
   (ex-style window-style-ex)
