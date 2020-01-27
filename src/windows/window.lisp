@@ -23,9 +23,17 @@
   (unless (slot-boundp instance 'class-atom)
     (setf (class-atom instance)
       (register-class-ex-w
-        (list :class-name +window-class-name+
+        (list :style nil
               :wnd-proc (cffi:callback window-proc-callback)
-              :instance (get-module-handle-w (cffi:null-pointer))))))
+              :cls-extra 0
+              :wnd-extra 0
+              :instance (get-module-handle-w (cffi:null-pointer))
+              :icon (cffi:null-pointer)
+              :cursor (cffi:null-pointer)
+              :background (cffi:make-pointer 5)
+              :menu-name (cffi:null-pointer)
+              :class-name +window-class-name+
+              :icon-sm (cffi:null-pointer)))))
   (setf (handle instance)
     (create-window-ex-w nil +window-class-name+ (getf initargs :title) :overlapped-window
       10 10 100 100
