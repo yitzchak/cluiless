@@ -2,6 +2,9 @@
 
 (defparameter *objects* (make-hash-table))
 
+(defun getobject (pointer)
+  (gethash (cffi:pointer-address pointer) *objects*))
+
 (defclass object ()
   ((handle
      :accessor handle
@@ -18,7 +21,7 @@
 
 (defmethod cffi:translate-from-foreign (value (type object-handle))
   (declare (ignore type))
-  (gethash (cffi:pointer-address value) *objects*))
+  (getobject value))
 
 (cffi:defcfun ("g_object_unref" :library glib2) :void
   (object :pointer))
@@ -30,4 +33,16 @@
     (trivial-garbage:finalize instance
       (lambda ()
         (g-object-unref handle)))))
+
+(cffi:define-foreign-type g-list-object-handles ()
+  ()
+  (:actual-type :pointer)
+  (:simple-parser g-list-object-handles))
+
+(defmethod cffi:translate-from-foreign (value (type g-list-object-handles))
+  (declare (ignore type))
+  (do ((glist value (g-list-next glist))
+       (result nil))
+      ((cffi:null-pointer-p glist) (reverse result))
+    (push (getobject (g-list-data glist)) result)))
         

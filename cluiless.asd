@@ -32,6 +32,7 @@
                 ((:file "base")
                  (:cffi-grovel-file "grovel")
                  (:file "object")
+                 (:file "glib")
                  (:file "signal")
                  (:file "application")
                  (:file "widget")

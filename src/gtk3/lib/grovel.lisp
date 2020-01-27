@@ -5,6 +5,7 @@
 (include "gtk/gtk.h")
 
 (ctype gulong "gulong")
+(ctype guint "guint")
 
 (define "_G_APPLICATION_IS_SERVICE" "G_APPLICATION_IS_SERVICE")
 (define "_G_APPLICATION_IS_LAUNCHER" "G_APPLICATION_IS_LAUNCHER")

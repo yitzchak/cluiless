@@ -5,15 +5,19 @@
 (defclass window (cluiless:window object)
   ((class-atom
      :accessor class-atom
-     :allocation :class))
+     :allocation :class)
+   (id
+     :accessor id))
   (:metaclass cluiless:ui-metaclass))
 
 (cffi:defcallback window-proc-callback lresult ((instance object-handle) (msg :uint) (w-param wparam) (l-param lparam))
-  (if (= 2 msg)
-    (progn
-      (post-quit-message 0)
+  (case (cffi:convert-from-foreign msg 'message-id)
+    (:destroy
+      (when (remove-window (id instance))
+        (post-quit-message 0))
       0)
-    (def-window-proc-w instance msg w-param l-param)))
+    (otherwise
+      (def-window-proc-w instance msg w-param l-param))))
 
 (defmethod initialize-instance :before ((instance window) &rest initargs &key &allow-other-keys)
   (unless (slot-boundp instance 'class-atom)
@@ -28,6 +32,10 @@
       (cffi:null-pointer) (cffi:null-pointer)
       (get-module-handle-w (cffi:null-pointer))
       (cffi:null-pointer))))
+
+(defmethod initialize-instance :after ((instance window) &rest initargs &key &allow-other-keys)
+  (declare (ignore initargs))
+  (setf (id instance) (add-window cluiless::*application* instance)))
 
 (defmethod closer-mop:slot-value-using-class ((class cluiless:ui-metaclass) (instance window) (slot closer-mop:standard-effective-slot-definition))
   (if (eql :ui-instance (closer-mop:slot-definition-allocation slot))

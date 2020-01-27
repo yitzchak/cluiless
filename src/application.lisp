@@ -49,3 +49,6 @@
           (error 'cluiless:backend-error))))))
 
 
+(defgeneric windows (instance))
+
+(defgeneric window-by-id (instance id))

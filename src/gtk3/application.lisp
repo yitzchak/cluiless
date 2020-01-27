@@ -23,3 +23,8 @@
     (float-features:with-float-traps-masked t
       (g-application-run instance 0 (cffi:null-pointer)))))
 
+(defmethod cluiless:windows ((instance application))
+  (gtk-application-get-windows instance))
+
+(defmethod cluiless:window-by-id ((instance application) id)
+  (gtk-application-get-window-by-id instance id))
