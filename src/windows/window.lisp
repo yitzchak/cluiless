@@ -36,7 +36,7 @@
               :icon-sm (cffi:null-pointer)))))
   (setf (handle instance)
     (create-window-ex-w nil +window-class-name+ (getf initargs :title) :overlapped-window
-      10 10 100 100
+      +cw-use-default+ +cw-use-default+ +cw-use-default+ +cw-use-default+
       (cffi:null-pointer) (cffi:null-pointer)
       (get-module-handle-w (cffi:null-pointer))
       (cffi:null-pointer))))

@@ -133,3 +133,4 @@
 (constant (+c-up-arrow+ "IDC_UPARROW"))
 (constant (+c-wait+ "DC_WAIT"))
 
+(constant (+cw-use-default+ "CW_USEDEFAULT"))
