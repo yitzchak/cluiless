@@ -29,8 +29,8 @@
               :wnd-extra 0
               :instance (get-module-handle-w (cffi:null-pointer))
               :icon (cffi:null-pointer)
-              :cursor (cffi:null-pointer)
-              :background (cffi:make-pointer 5)
+              :cursor (load-cursor-w (cffi:null-pointer) (cffi:make-pointer +c-arrow+))
+              :background (cffi:make-pointer +color-window+)
               :menu-name (cffi:null-pointer)
               :class-name +window-class-name+
               :icon-sm (cffi:null-pointer)))))

@@ -69,3 +69,7 @@
 (cffi:defcfun ("ShowWindow" :library user32) :boolean
   (window object-handle)
   (cmd-show show-window-cmd))
+
+(cffi:defcfun ("LoadCursorW" :library user32) :pointer
+  (instance :pointer)
+  (cursor-name wstring))
