@@ -13,7 +13,7 @@
 (cffi:defcallback window-proc-callback lresult ((instance object-handle) (msg :uint) (w-param wparam) (l-param lparam))
   (cond
     ((= msg +wm-destroy+)
-      (when (remove-window (id instance))
+      (when (remove-window cluiless::*application* (id instance))
         (post-quit-message 0))
       0)
     (t
