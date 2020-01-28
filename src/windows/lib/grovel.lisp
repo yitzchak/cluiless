@@ -96,5 +96,4 @@
   ((:show-normal-no-activate "SW_SHOWNOACTIVATE"))
   ((:show-normal "SW_SHOWNORMAL")))
 
-(constantenum (message-id :base-type :uint)
-  ((:destroy "WM_DESTROY")))
+(constant (+wm-destroy+ "WM_DESTROY"))

@@ -11,8 +11,8 @@
   (:metaclass cluiless:ui-metaclass))
 
 (cffi:defcallback window-proc-callback lresult ((instance object-handle) (msg :uint) (w-param wparam) (l-param lparam))
-  (case (cffi:convert-from-foreign msg 'message-id)
-    (:destroy
+  (case msg
+    (+wm-destroy+
       (when (remove-window (id instance))
         (post-quit-message 0))
       0)
