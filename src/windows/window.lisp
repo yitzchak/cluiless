@@ -11,12 +11,12 @@
   (:metaclass cluiless:ui-metaclass))
 
 (cffi:defcallback window-proc-callback lresult ((instance object-handle) (msg :uint) (w-param wparam) (l-param lparam))
-  (case msg
-    (+wm-destroy+
+  (cond
+    ((= msg +wm-destroy+)
       (when (remove-window (id instance))
         (post-quit-message 0))
       0)
-    (otherwise
+    (t
       (def-window-proc-w instance msg w-param l-param))))
 
 (defmethod initialize-instance :before ((instance window) &rest initargs &key &allow-other-keys)

@@ -25,7 +25,7 @@
 
 (defmethod cffi:translate-from-foreign (value (type object-handle))
   (declare (ignore type))
-  (or (gethash (cffi:pointer-address value) *objects*)) value)
+  (or (gethash (cffi:pointer-address value) *objects*) value))
 
 (defmethod (setf handle) :after (value (instance object))
   (setf (gethash (cffi:pointer-address value) *objects*) instance))
