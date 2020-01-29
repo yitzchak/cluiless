@@ -28,6 +28,7 @@
                                      (list c)))
                            backends)
                          *backends*))
+      (format t "~A~%" candidate)
       (handler-case
         (let ((app (make-cluiless-instance "APPLICATION" initargs :backend candidate)))
           (setq *backend* candidate)

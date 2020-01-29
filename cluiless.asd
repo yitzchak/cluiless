@@ -40,10 +40,15 @@
              (:file "application")
              (:file "window")))
          (:module cocoa
-          :if-feature :darwin
+          ;:if-feature :darwin
           :serial t
           :components
             ((:file "package")
+             (:module lib
+              :serial t
+              :components
+                ((:file "base")
+                 (:file "objective-c")))
              (:file "application")))
          (:module windows
           :if-feature :win32
