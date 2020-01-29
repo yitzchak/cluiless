@@ -1,5 +1,9 @@
 (in-package #:cluiless/gtk3)
 
+(cffi:defcenum (gtk-window-type :unsigned-int)
+  :toplevel
+  :popup)
+
 (cffi:defcfun ("gtk_application_window_new" :library gtk3) :pointer
   (application object-handle))
 

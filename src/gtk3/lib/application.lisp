@@ -1,5 +1,16 @@
 (in-package #:cluiless/gtk3)
 
+(cffi:defbitfield (g-application-flags :unsigned-int)
+  :is-service
+  :is-launcher
+  :handles-open
+  :handles-command-line
+  :send-environment
+  :non-unique
+  :can-override-app-id
+  :allow-replacement
+  :replace)
+
 (cffi:defcfun ("g_application_run" :library glib2) :int
   (application object-handle)
   (argc :int)
@@ -22,5 +33,5 @@
 
 (cffi:defcfun ("gtk_application_get_window_by_id" :library gtk3) object-handle
   (application object-handle)
-  (id guint))
+  (id :unsigned-int))
 

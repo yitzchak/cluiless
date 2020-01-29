@@ -24,13 +24,11 @@
           :if-feature :unix
           :serial t
           :components
-            ((:cffi-grovel-file "probe")
-             (:file "package")
+            ((:file "package")
              (:module lib
               :serial t
               :components
                 ((:file "base")
-                 (:cffi-grovel-file "grovel")
                  (:file "object")
                  (:file "glib")
                  (:file "signal")
