@@ -35,7 +35,7 @@
 (defparameter +c-up-arrow+ (cffi:make-pointer 32516))
 (defparameter +c-wait+ (cffi:make-pointer 32514))
 
-(defparameter +cw-use-default+ #x80000000)
+(defparameter +cw-use-default+ -2147483648)
 
 (cffi:defbitfield (class-style :unsigned-int)
   :vredraw

@@ -3,7 +3,6 @@
   :version "0.1"
   :author "Tarn W. Burton"
   :license "MIT"
-;  :defsystem-depends-on (:cffi-grovel)
   :depends-on
     (#:alexandria
      #:cffi
@@ -38,7 +37,6 @@
              (:file "application")
              (:file "window")))
          (:module cocoa
-          ;:if-feature :darwin
           :serial t
           :components
             ((:file "package")
@@ -49,7 +47,6 @@
                  (:file "objective-c")))
              (:file "application")))
          (:module windows
-;          :if-feature :win32
           :serial t
           :components
             ((:file "package")
@@ -57,7 +54,6 @@
               :serial t
               :components
                 ((:file "base")
-;                 (:cffi-grovel-file "grovel")
                  (:file "object")
                  (:file "kernel")
                  (:file "message")
