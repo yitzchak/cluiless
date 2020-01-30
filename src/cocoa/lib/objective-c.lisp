@@ -37,30 +37,26 @@
   (sel-register-name value))
 
 (defmacro objc-msg-send (instance selector &optional (retval 'id) &rest args)
-  (let ((qargs (loop
-                 for (ty val) on args by #'cddr
-                 collect `(quote ,ty)
-                 collect val)))
-    (cond
-      ((or (eq :double retval) (eq :float retval))
-        `(cffi:foreign-funcall ("objc_msgSend_fpret" :library objc)
-           id ,instance
-           sel ,selector
-           ,@qargs
-           ,retval))
-      ((and (listp retval) (eq :struct (first retval)))
-        (with-gensyms (struct)
-          `(cffi:with-foreign-object (,struct ',retval)
-             (cffi:foreign-funcall ("objc_msgSend_stret" :library objc)
-               :pointer ,struct
-               id ,instance
-               sel ,selector
-               ,@qargs
-               :void))))
-      (t
-        `(cffi:foreign-funcall ("objc_msgSend" :library objc)
-           id ,instance
-           sel ,selector
-           ,@qargs
-           ,retval)))))
+  (cond
+    ((or (eq :double retval) (eq :float retval))
+      `(cffi:foreign-funcall ("objc_msgSend_fpret" :library objc)
+         id ,instance
+         sel ,selector
+         ,@args
+         ,retval))
+    ((and (listp retval) (eq :struct (first retval)))
+      (with-gensyms (struct)
+        `(cffi:with-foreign-object (,struct ',retval)
+           (cffi:foreign-funcall ("objc_msgSend_stret" :library objc)
+             :pointer ,struct
+             id ,instance
+             sel ,selector
+             ,@args
+             :void))))
+    (t
+      `(cffi:foreign-funcall ("objc_msgSend" :library objc)
+         id ,instance
+         sel ,selector
+         ,@args
+         ,retval))))
 
