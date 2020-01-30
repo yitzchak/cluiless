@@ -7,11 +7,11 @@
 (cffi:defcstruct msg
   (hwnd :pointer)
   (message :uint)
-  (w-param wparam)
-  (l-param lparam)
-  (time dword)
+  (wparam :ulong)
+  (lparam :long)
+  (time :uint32)
   (pt (:struct point))
-  (private dword))
+  (private :uint32))
 
 (cffi:defcfun ("GetMessageW" :library user32) :int
   (msg :pointer)
@@ -22,8 +22,11 @@
 (cffi:defcfun ("TranslateMessage" :library user32) :int
   (msg :pointer))
 
-(cffi:defcfun ("DispatchMessageW" :library user32) lresult
+(cffi:defcfun ("DispatchMessageW" :library user32) :long
   (msg :pointer))
 
 (cffi:defcfun ("PostQuitMessage" :library user32) :void
   (exit-code :int))
+
+(defparameter +wm-destroy+ #x2)
+

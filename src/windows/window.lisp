@@ -10,14 +10,14 @@
      :accessor id))
   (:metaclass cluiless:ui-metaclass))
 
-(cffi:defcallback window-proc-callback lresult ((instance object-handle) (msg :uint) (w-param wparam) (l-param lparam))
+(cffi:defcallback window-proc-callback :long ((instance object-handle) (msg :uint) (wparam :ulong) (lparam :long))
   (cond
     ((= msg +wm-destroy+)
       (when (remove-window cluiless::*application* (id instance))
         (post-quit-message 0))
       0)
     (t
-      (def-window-proc-w instance msg w-param l-param))))
+      (def-window-proc-w instance msg wparam lparam))))
 
 (defmethod initialize-instance :before ((instance window) &rest initargs &key &allow-other-keys)
   (unless (slot-boundp instance 'class-atom)
