@@ -6,6 +6,7 @@
   :depends-on
     (#:alexandria
      #:cffi
+     #:cffi-libffi
      #:closer-mop
      #:float-features
      #:trivial-garbage
@@ -44,8 +45,11 @@
               :serial t
               :components
                 ((:file "base")
-                 (:file "objective-c")))
-             (:file "application")))
+                 (:file "objective-c")
+                 (:file "foundation")
+                 (:file "window")))
+             (:file "application")
+             (:file "window")))
          (:module windows
           :serial t
           :components

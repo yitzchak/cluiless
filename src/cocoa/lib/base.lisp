@@ -19,6 +19,6 @@
   (t (:or)))
 
 (defmethod cffi:translate-name-from-foreign ((spec string) (package (eql *package*)) &optional varp)
-  (let ((name (cffi:translate-camelcase-name (substitute #\- #\_ spec))))
+  (let ((name (cffi:translate-camelcase-name (substitute #\- #\_ spec) :special-words '("NS"))))
     (if varp (intern (format nil "*~a*" name)) name)))
 

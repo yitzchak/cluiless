@@ -1,5 +1,12 @@
 (in-package :cluiless/cocoa)
 
+(defparameter *objects* (make-hash-table))
+
+(cffi:defctype size-t
+  #+x86 :uint32
+  #+x86-64 :uint64
+  #-(or x86-64 x86) :long)
+
 (cffi:defcfun ("objc_getClass" :library objc) :pointer
   (name :string))
 
@@ -11,9 +18,21 @@
   (:actual-type :pointer)
   (:simple-parser id))
 
+(defun getobject (pointer)
+  (or (gethash (cffi:pointer-address pointer) *objects*) pointer))
+
+(defclass object ()
+  ((handle
+     :accessor handle
+     :initarg :handle)))
+
 (defmethod cffi:translate-to-foreign (value (type id))
   (declare (ignore type))
   value)
+
+(defmethod cffi:translate-to-foreign ((value object) (type id))
+  (declare (ignore type))
+  (handle value))
 
 (defmethod cffi:translate-to-foreign ((value string) (type id))
   (declare (ignore type))
@@ -21,7 +40,7 @@
 
 (defmethod cffi:translate-from-foreign (value (type id))
   (declare (ignore type))
-  value)
+  (getobject value))
 
 (cffi:define-foreign-type sel ()
   ()
@@ -35,6 +54,10 @@
 (defmethod cffi:translate-to-foreign ((value string) (type sel))
   (declare (ignore type))
   (sel-register-name value))
+
+(cffi:defcfun ("class_createInstance" :library objc) :pointer
+  (cls id)
+  (extra-bytes size-t))
 
 (defmacro objc-msg-send (instance selector &optional (retval 'id) &rest args)
   (cond
