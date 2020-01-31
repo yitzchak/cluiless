@@ -30,6 +30,6 @@
 
 (defobjcfun "title" ns-string)
 
-(defobjcfun "setText:" :void
+(defobjcfun "setTitle:" :void
   (value ns-string))
 
