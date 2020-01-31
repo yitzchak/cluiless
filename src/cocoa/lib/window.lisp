@@ -17,3 +17,19 @@
 (cffi:defbitfield ns-backing-store-type
   (:buffered #x2))
 
+(defobjcfun "initWithContentRect:styleMask:backing:defer:" :pointer
+  (content-rect (:struct ns-rect))
+  (style-mask ns-window-style-mask)
+  (backing ns-backing-store-type)
+  (defer :boolean))
+
+(defobjcfun "isVisible" :boolean)
+
+(defobjcfun "setIsVisible:" :void
+  (value :boolean))
+
+(defobjcfun "title" ns-string)
+
+(defobjcfun "setText:" :void
+  (value ns-string))
+

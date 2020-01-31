@@ -41,6 +41,12 @@
   (declare (ignore type))
   (objc-get-class value))
 
+(defmethod cffi:translate-into-foreign-memory ((value object) (type objc-id) pointer)
+  (call-next-method (handle value) type pointer))
+
+(defmethod cffi:translate-into-foreign-memory ((value string) (type objc-id) pointer)
+  (call-next-method (objc-get-class value) type pointer))
+
 (defmethod cffi:translate-from-foreign (value (type objc-id))
   (declare (ignore type))
   (getobject value))
@@ -86,3 +92,27 @@
          ,@args
          ,retval))))
 
+(defmacro defobjcfun (name return-type &body arguments)
+  (let* ((lisp-name (cffi:translate-camelcase-name (substitute #\/ #\: name) :special-words '("NS")))
+        (private-name (intern (format nil "%~A" lisp-name)))
+        (argument-names (mapcar #'first arguments))
+        (simple-name (if (or (eq :double return-type) (eq :float return-type)) "objc_msgSend_fpret" "objc_msgSend")))
+    (if (and (listp return-type) (eq :struct (first return-type)))
+      `(progn
+         (cffi:defcfun ("objc_msgSend_stret" ,private-name :library objc)
+           :void
+           (struct :pointer)
+           (instance objc-id)
+           (selector sel)
+           ,@arguments)
+         (defun ,lisp-name (struct instance ,@argument-names)
+           (funcall (function ,private-name) struct instance ,name ,@argument-names)))
+      `(progn
+         (cffi:defcfun (,simple-name ,private-name :library objc)
+           ,return-type
+           (instance objc-id)
+           (selector sel)
+           ,@arguments)
+         (defun ,lisp-name (instance ,@argument-names)
+           (funcall (function ,private-name) instance ,name ,@argument-names))))))
+        
