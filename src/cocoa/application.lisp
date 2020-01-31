@@ -1,8 +1,7 @@
 (in-package :cluiless/cocoa)
 
-(defclass application (cluiless:application)
-  ((handle
-     :accessor handle)))
+(defclass application (cluiless:application object)
+  ())
 
 (cluiless:defbackend :cocoa cluiless/cocoa)
 
@@ -15,5 +14,5 @@
   (trivial-main-thread:with-body-in-main-thread ()
     (float-features:with-float-traps-masked t
       (cluiless:activate instance)
-      (objc-msg-send (handle instance) "run" :void))))
+      (objc-msg-send instance "run" :void))))
 

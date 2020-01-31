@@ -13,10 +13,10 @@
 (cffi:defcfun ("sel_registerName" :library objc) :pointer
   (name :string))
 
-(cffi:define-foreign-type id ()
+(cffi:define-foreign-type objc-id ()
   ()
   (:actual-type :pointer)
-  (:simple-parser id))
+  (:simple-parser objc-id))
 
 (defun getobject (pointer)
   (or (gethash (cffi:pointer-address pointer) *objects*) pointer))
@@ -26,19 +26,22 @@
      :accessor handle
      :initarg :handle)))
 
-(defmethod cffi:translate-to-foreign (value (type id))
+(defmethod (setf handle) :after (value (instance object))
+  (setf (gethash (cffi:pointer-address value) *objects*) instance))
+
+(defmethod cffi:translate-to-foreign (value (type objc-id))
   (declare (ignore type))
   value)
 
-(defmethod cffi:translate-to-foreign ((value object) (type id))
+(defmethod cffi:translate-to-foreign ((value object) (type objc-id))
   (declare (ignore type))
   (handle value))
 
-(defmethod cffi:translate-to-foreign ((value string) (type id))
+(defmethod cffi:translate-to-foreign ((value string) (type objc-id))
   (declare (ignore type))
   (objc-get-class value))
 
-(defmethod cffi:translate-from-foreign (value (type id))
+(defmethod cffi:translate-from-foreign (value (type objc-id))
   (declare (ignore type))
   (getobject value))
 
@@ -56,14 +59,14 @@
   (sel-register-name value))
 
 (cffi:defcfun ("class_createInstance" :library objc) :pointer
-  (cls id)
+  (cls objc-id)
   (extra-bytes size-t))
 
-(defmacro objc-msg-send (instance selector &optional (retval 'id) &rest args)
+(defmacro objc-msg-send (instance selector &optional (retval 'objc-id) &rest args)
   (cond
     ((or (eq :double retval) (eq :float retval))
       `(cffi:foreign-funcall ("objc_msgSend_fpret" :library objc)
-         id ,instance
+         objc-id ,instance
          sel ,selector
          ,@args
          ,retval))
@@ -72,13 +75,13 @@
         `(cffi:with-foreign-object (,struct ',retval)
            (cffi:foreign-funcall ("objc_msgSend_stret" :library objc)
              :pointer ,struct
-             id ,instance
+             objc-id ,instance
              sel ,selector
              ,@args
              :void))))
     (t
       `(cffi:foreign-funcall ("objc_msgSend" :library objc)
-         id ,instance
+         objc-id ,instance
          sel ,selector
          ,@args
          ,retval))))

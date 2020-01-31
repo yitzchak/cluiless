@@ -26,10 +26,13 @@
 (cffi:defcfun ("g_object_unref" :library glib2) :void
   (object :pointer))
 
+(defmethod (setf handle) :after (value (instance object))
+  (setf (gethash (cffi:pointer-address value) *objects*) instance))
+
 (defmethod initialize-instance :after ((instance object) &rest initargs &key &allow-other-keys)
   (declare (ignore initargs))
   (when-let ((handle (handle instance)))
-    (setf (gethash (cffi:pointer-address handle) *objects*) instance)
+;    (setf (gethash (cffi:pointer-address handle) *objects*) instance)
     (trivial-garbage:finalize instance
       (lambda ()
         (g-object-unref handle)))))
