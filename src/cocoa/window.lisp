@@ -17,10 +17,10 @@
   (unless (slot-boundp instance 'delegate-class)
     (with-slots (delegate-class) instance
       (setf delegate-class
-        (objc/allocate-class-pair "NSObject" "cluilessWindowDelegate" 0))
-      (class/add-protocol delegate-class (objc/get-protocol "NSWindowDelegate"))))
-;      (class/add-protocol delegate-class (objc/get-protocol "NSObject"))))
-;      (class/replace-method delegate-class "windowWillClose:" (cffi:callback window-will-close) "v@:@")))
+        (objc/allocate-class-pair "NSObject" "CluilessWindowDelegate" 0))
+      (class/add-protocol delegate-class (objc/get-protocol "NSWindowDelegate"))
+      (class/add-method delegate-class "windowWillClose:" (cffi:callback window-will-close) "v@:@")
+      (objc/register-class-pair delegate-class)))
 
   (setf (handle instance)
     (objc/msg-send (objc/msg-send "NSWindow" "alloc" :pointer) "initWithContentRect:styleMask:backing:defer:"
@@ -30,10 +30,9 @@
       ns-backing-store-type '(:buffered)
       ));:bool nil)))
 
-;  (let ((delegate (objc/msg-send (delegate-class instance) "alloc" :pointer)))
-;    (objc/msg-send instance "init" :pointer)
-;    (objc/msg-send instance "setDelegate:" :pointer
-;      objc-id delegate))
+  (let ((delegate (objc/msg-send (delegate-class instance) "new" :pointer)))
+    (objc/msg-send instance "setDelegate:" :pointer
+      objc-id delegate))
 
   (objc/msg-send instance "orderFrontRegardless" :void))
 

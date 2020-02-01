@@ -85,6 +85,12 @@
   (imp :pointer)
   (types :string))
 
+(cffi:defcfun ("class_addMethod" :library objc) :pointer
+  (cls objc-id)
+  (name sel)
+  (imp :pointer)
+  (types :string))
+
 (defmacro objc/msg-send (instance selector &optional (retval 'objc-id) &rest args)
   (cond
     ((or (eq :double retval) (eq :float retval))
@@ -122,3 +128,6 @@
 (cffi:defcfun ("class_addProtocol" :library objc) :bool
   (cls objc-id)
   (protocol :pointer))
+
+(cffi:defcfun ("objc_registerClassPair" :library objc) :void
+  (cls objc-id))
