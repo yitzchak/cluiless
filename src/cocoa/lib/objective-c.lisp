@@ -47,6 +47,9 @@
 (defmethod cffi:translate-into-foreign-memory ((value object) (type objc-id) pointer)
   (setf (cffi:mem-aref pointer :pointer) (handle value)))
 
+(defmethod cffi:translate-into-foreign-memory (value (type objc-id) pointer)
+  (setf (cffi:mem-aref pointer :pointer) value))
+
 (defmethod cffi:translate-from-foreign (value (type objc-id))
   (declare (ignore type))
   (getobject value))
@@ -112,3 +115,10 @@
 (cffi:defcfun ("class_getInstanceMethod" :library objc) :pointer
   (cls objc-id)
   (name sel))
+
+(cffi:defcfun ("objc_getProtocol" :library objc) :pointer
+  (name :string))
+
+(cffi:defcfun ("class_addProtocol" :library objc) :bool
+  (cls objc-id)
+  (protocol :pointer))
