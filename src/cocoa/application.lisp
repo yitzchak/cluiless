@@ -8,11 +8,11 @@
 (defmethod initialize-instance :before ((instance application) &rest initargs &key &allow-other-keys)
   (declare (ignore initargs))
   (cluiless:load-backend-libraries 'objc 'cocoa 'app-kit 'foundation)
-  (setf (handle instance) (objc-msg-send "NSApplication" "sharedApplication")))
+  (setf (handle instance) (objc/msg-send "NSApplication" "sharedApplication")))
 
 (defmethod cluiless:run ((instance application))
   (trivial-main-thread:with-body-in-main-thread ()
     (float-features:with-float-traps-masked t
       (cluiless:activate instance)
-      (objc-msg-send instance "run" :void))))
+      (objc/msg-send instance "run" :void))))
 

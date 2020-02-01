@@ -39,10 +39,10 @@
 
 (defmethod cffi:translate-to-foreign ((value string) (type objc-id))
   (declare (ignore type))
-  (objc-get-class value))
+  (objc/get-class value))
 
 (defmethod cffi:translate-into-foreign-memory ((value string) (type objc-id) pointer)
-  (setf (cffi:mem-aref pointer :pointer) (objc-get-class value)))
+  (setf (cffi:mem-aref pointer :pointer) (objc/get-class value)))
 
 (defmethod cffi:translate-into-foreign-memory ((value object) (type objc-id) pointer)
   (setf (cffi:mem-aref pointer :pointer) (handle value)))
@@ -62,16 +62,27 @@
 
 (defmethod cffi:translate-to-foreign ((value string) (type sel))
   (declare (ignore type))
-  (sel-register-name value))
+  (sel/register-name value))
 
 (defmethod cffi:translate-into-foreign-memory ((value string) (type sel) pointer)
-  (setf (cffi:mem-aref pointer :pointer) (sel-register-name value)))
+  (setf (cffi:mem-aref pointer :pointer) (sel/register-name value)))
+
+(cffi:defcfun ("objc_allocateClassPair" :library objc) :pointer
+  (superclass objc-id)
+  (name :string)
+  (extra-bytes size-t))
 
 (cffi:defcfun ("class_createInstance" :library objc) :pointer
   (cls objc-id)
   (extra-bytes size-t))
 
-(defmacro objc-msg-send (instance selector &optional (retval 'objc-id) &rest args)
+(cffi:defcfun ("class_replaceMethod" :library objc) :pointer
+  (cls objc-id)
+  (name sel)
+  (imp :pointer)
+  (types :string))
+
+(defmacro objc/msg-send (instance selector &optional (retval 'objc-id) &rest args)
   (cond
     ((or (eq :double retval) (eq :float retval))
       `(cffi:foreign-funcall ("objc_msgSend_fpret" :library objc)
@@ -95,3 +106,9 @@
          ,@args
          ,retval))))
 
+(cffi:defcfun ("method_getTypeEncoding" :library objc) :string
+  (meth :pointer))
+
+(cffi:defcfun ("class_getInstanceMethod" :library objc) :pointer
+  (cls objc-id)
+  (name sel))
