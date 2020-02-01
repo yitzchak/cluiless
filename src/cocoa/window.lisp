@@ -9,7 +9,7 @@
   (setf (handle instance) (class-create-instance "NSWindow" 0))
   (objc-msg-send instance "initWithContentRect:styleMask:backing:defer:"
     :pointer
-    (:struct ns-rect) '(:origin (:x 10 :y 10) :size (:width 640 :height 480))
+    (:struct ns-rect) '(:origin (:x 10.0d0 :y 10.0d0) :size (:width 640.0d0 :height 480.0d0))
     ns-window-style-mask '(:titled :closable :resizable)
     ns-backing-store-type '(:buffered)
     :boolean nil))

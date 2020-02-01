@@ -1,0 +1,10 @@
+(defmethod cffi:translate-into-foreign-memory ((value string) (type sel) pointer)
+  (setf (cffi:mem-aref pointer :pointer) (sel-register-name value)))
+
+(defmethod cffi:trans*late-into-foreign-memory ((value object) (type objc-id) pointer)
+  (setf (cffi:mem-aref pointer :pointer) (handle value)))
+
+(defmethod cffi:translate-into-foreign-memory ((value string) (type objc-id) pointer)
+  (setf (cffi:mem-aref pointer :pointer) (objc-get-class value)))
+
+
