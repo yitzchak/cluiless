@@ -42,10 +42,10 @@
   (objc-get-class value))
 
 (defmethod cffi:translate-into-foreign-memory ((value object) (type objc-id) pointer)
-  (call-next-method (handle value) type pointer))
+  (setf (cffi:mem-aref pointer :pointer) (handle value)))
 
 (defmethod cffi:translate-into-foreign-memory ((value string) (type objc-id) pointer)
-  (call-next-method (objc-get-class value) type pointer))
+  (setf (cffi:mem-aref pointer :pointer) (objc-get-class value)))
 
 (defmethod cffi:translate-from-foreign (value (type objc-id))
   (declare (ignore type))
