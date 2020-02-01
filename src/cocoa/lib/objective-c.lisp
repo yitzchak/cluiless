@@ -41,10 +41,10 @@
   (declare (ignore type))
   (objc-get-class value))
 
-(defmethod cffi:translate-into-foreign-memory ((value string) (type sel) pointer)
-  (setf (cffi:mem-aref pointer :pointer) (sel-register-name value)))
+(defmethod cffi:translate-into-foreign-memory ((value string) (type objc-id) pointer)
+  (setf (cffi:mem-aref pointer :pointer) (objc-get-class value)))
 
-(defmethod cffi:trans*late-into-foreign-memory ((value object) (type objc-id) pointer)
+(defmethod cffi:translate-into-foreign-memory ((value object) (type objc-id) pointer)
   (setf (cffi:mem-aref pointer :pointer) (handle value)))
 
 (defmethod cffi:translate-from-foreign (value (type objc-id))
@@ -64,8 +64,8 @@
   (declare (ignore type))
   (sel-register-name value))
 
-(defmethod cffi:translate-into-foreign-memory ((value string) (type objc-id) pointer)
-  (setf (cffi:mem-aref pointer :pointer) (objc-get-class value)))
+(defmethod cffi:translate-into-foreign-memory ((value string) (type sel) pointer)
+  (setf (cffi:mem-aref pointer :pointer) (sel-register-name value)))
 
 (cffi:defcfun ("class_createInstance" :library objc) :pointer
   (cls objc-id)
