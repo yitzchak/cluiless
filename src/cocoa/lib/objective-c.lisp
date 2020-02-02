@@ -70,6 +70,25 @@
 (defmethod cffi:translate-into-foreign-memory ((value string) (type sel) pointer)
   (setf (cffi:mem-aref pointer :pointer) (sel/register-name value)))
 
+(cffi:defcfun ("objc_getProtocol" :library objc) :pointer
+  (name :string))
+
+(cffi:define-foreign-type protocol ()
+  ()
+  (:actual-type :pointer)
+  (:simple-parser protocol))
+
+(defmethod cffi:translate-to-foreign (value (type protocol))
+  (declare (ignore type))
+  value)
+
+(defmethod cffi:translate-to-foreign ((value string) (type protocol))
+  (declare (ignore type))
+  (objc/get-protocol value))
+
+(defmethod cffi:translate-into-foreign-memory ((value string) (type sel) pointer)
+  (setf (cffi:mem-aref pointer :pointer) (objc/get-protocol value)))
+
 (cffi:defcfun ("objc_allocateClassPair" :library objc) :pointer
   (superclass objc-id)
   (name :string)
@@ -120,9 +139,6 @@
 (cffi:defcfun ("class_getInstanceMethod" :library objc) :pointer
   (cls objc-id)
   (name sel))
-
-(cffi:defcfun ("objc_getProtocol" :library objc) :pointer
-  (name :string))
 
 (cffi:defcfun ("class_addProtocol" :library objc) :bool
   (cls objc-id)
