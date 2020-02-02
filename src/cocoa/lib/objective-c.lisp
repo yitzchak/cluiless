@@ -73,20 +73,20 @@
 (cffi:defcfun ("objc_getProtocol" :library objc) :pointer
   (name :string))
 
-(cffi:define-foreign-type protocol ()
+(cffi:define-foreign-type objc-protocol ()
   ()
   (:actual-type :pointer)
-  (:simple-parser protocol))
+  (:simple-parser objc-protocol))
 
-(defmethod cffi:translate-to-foreign (value (type protocol))
+(defmethod cffi:translate-to-foreign (value (type objc-protocol))
   (declare (ignore type))
   value)
 
-(defmethod cffi:translate-to-foreign ((value string) (type protocol))
+(defmethod cffi:translate-to-foreign ((value string) (type objc-protocol))
   (declare (ignore type))
   (objc/get-protocol value))
 
-(defmethod cffi:translate-into-foreign-memory ((value string) (type sel) pointer)
+(defmethod cffi:translate-into-foreign-memory ((value string) (type objc-protocol) pointer)
   (setf (cffi:mem-aref pointer :pointer) (objc/get-protocol value)))
 
 (cffi:defcfun ("objc_allocateClassPair" :library objc) :pointer
@@ -142,7 +142,7 @@
 
 (cffi:defcfun ("class_addProtocol" :library objc) :bool
   (cls objc-id)
-  (protocol :pointer))
+  (protocol objc-protocol))
 
 (cffi:defcfun ("objc_registerClassPair" :library objc) :void
   (cls objc-id))
