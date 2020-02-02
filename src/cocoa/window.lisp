@@ -13,28 +13,25 @@
 
 (defmethod initialize-instance :before ((instance window) &rest initargs &key &allow-other-keys)
   (declare (ignore initargs))
-
-  (unless (slot-boundp instance 'delegate-class)
-    (with-slots (delegate-class) instance
+  (with-slots (delegate-class handle) instance
+    (unless (slot-boundp instance 'delegate-class)
       (setf delegate-class
         (objc/allocate-class-pair "NSObject" "CluilessWindowDelegate" 0))
       (class/add-protocol delegate-class "NSWindowDelegate")
       (class/add-method delegate-class "windowWillClose:" (cffi:callback window-will-close) "v@:@")
-      (objc/register-class-pair delegate-class)))
+      (objc/register-class-pair delegate-class))
 
-  (setf (handle instance)
-    (objc/msg-send (objc/msg-send "NSWindow" "alloc" :pointer) "initWithContentRect:styleMask:backing:defer:"
-      :pointer
-      (:struct ns-rect) '(:origin (:x 10.0d0 :y 10.0d0) :size (:width 640.0d0 :height 480.0d0))
-      ns-window-style-mask '(:titled :closable :resizable)
-      ns-backing-store-type '(:buffered)
-      ));:bool nil)))
+    (setf handle
+      (objc/msg-send (objc/msg-send "NSWindow" "alloc" :pointer) "initWithContentRect:styleMask:backing:defer:"
+        :pointer
+        (:struct ns-rect) '(:origin (:x 10.0d0 :y 10.0d0) :size (:width 640.0d0 :height 480.0d0))
+        ns-window-style-mask '(:titled :closable :resizable)
+        ns-backing-store-type '(:buffered)))
 
-  (let ((delegate (objc/msg-send (delegate-class instance) "new" :pointer)))
     (objc/msg-send instance "setDelegate:" :pointer
-      objc-id delegate))
+      objc-id (objc/msg-send delegate-class "new" :pointer))
 
-  (objc/msg-send instance "orderFrontRegardless" :void))
+    (objc/msg-send instance "orderFrontRegardless" :void)))
 
 (defmethod closer-mop:slot-value-using-class ((class cluiless:ui-metaclass) (instance window) (slot closer-mop:standard-effective-slot-definition))
   (if (eql :ui-instance (closer-mop:slot-definition-allocation slot))

@@ -15,19 +15,19 @@
   (declare (ignore initargs))
   (cluiless:load-backend-libraries 'objc 'cocoa 'app-kit 'foundation)
 
-  (unless (slot-boundp instance 'delegate-class)
-    (with-slots (delegate-class) instance
+  (with-slots (delegate-class handle) instance
+    (unless (slot-boundp instance 'delegate-class)
       (setf delegate-class
         (objc/allocate-class-pair "NSObject" "cluilessApplicationDelegate" 0))
       (class/add-protocol delegate-class "NSApplicationDelegate")
-      (class/add-method delegate-class "applicationShouldTerminateAfterLastWindowClosed:" (cffi:callback application-should-terminate-after-last-window-closed) "c@:@")
-      (objc/register-class-pair delegate-class)))
+      (class/add-method delegate-class "applicationShouldTerminateAfterLastWindowClosed:"
+        (cffi:callback application-should-terminate-after-last-window-closed) "c@:@")
+      (objc/register-class-pair delegate-class))
 
-  (setf (handle instance) (objc/msg-send "NSApplication" "sharedApplication"))
+    (setf handle (objc/msg-send "NSApplication" "sharedApplication"))
 
-  (let ((delegate (objc/msg-send (delegate-class instance) "new" :pointer)))
     (objc/msg-send instance "setDelegate:" :pointer
-      objc-id delegate)))
+      objc-id (objc/msg-send delegate-class "new" :pointer))))
 
 (defmethod cluiless:run ((instance application))
   (trivial-main-thread:with-body-in-main-thread ()
