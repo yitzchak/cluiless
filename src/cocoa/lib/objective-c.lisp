@@ -111,7 +111,6 @@
     (t
       `(cffi:foreign-funcall ("objc_msgSend" :library objc)
          objc-id ,instance
-         sel ,selector
          ,@args
          ,retval))))
 

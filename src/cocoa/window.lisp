@@ -1,7 +1,7 @@
 (in-package #:cluiless/cocoa)
 
 (cffi:defcallback window-will-close :pointer ((instance objc-id) (name sel) (notification :pointer))
-  (declare (ignore name notification))
+  (declare (ignore instance name notification))
   (format t "window-will-close ~A~%" instance)
   (cffi:null-pointer))
 
@@ -18,7 +18,7 @@
     (with-slots (delegate-class) instance
       (setf delegate-class
         (objc/allocate-class-pair "NSObject" "CluilessWindowDelegate" 0))
-      (class/add-protocol delegate-class (objc/get-protocol "NSWindowDelegate"))
+      (class/add-protocol delegate-class "NSWindowDelegate")
       (class/add-method delegate-class "windowWillClose:" (cffi:callback window-will-close) "v@:@")
       (objc/register-class-pair delegate-class)))
 
