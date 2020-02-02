@@ -1,7 +1,7 @@
 (in-package :cluiless/cocoa)
 
 (cffi:defcallback application-should-terminate-after-last-window-closed :boolean ((instance objc-id) (name sel) (application :pointer))
-  (declare (ignore name application))
+  (declare (ignore instance name application))
   t)
 
 (defclass application (cluiless:application object)
