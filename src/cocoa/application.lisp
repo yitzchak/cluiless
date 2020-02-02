@@ -20,7 +20,7 @@
       (setf delegate-class
         (objc/allocate-class-pair "NSObject" "cluilessApplicationDelegate" 0))
       (class/add-protocol delegate-class "NSApplicationDelegate")
-      (class/add-method delegate-class "applicationShouldTerminateAfterLastWindowClosed:" (cffi:callback application-should-terminate-after-last-window-closed) "b@:@")
+      (class/add-method delegate-class "applicationShouldTerminateAfterLastWindowClosed:" (cffi:callback application-should-terminate-after-last-window-closed) "c@:@")
       (objc/register-class-pair delegate-class)))
 
   (setf (handle instance) (objc/msg-send "NSApplication" "sharedApplication"))
