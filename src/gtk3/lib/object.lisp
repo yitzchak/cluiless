@@ -17,6 +17,10 @@
 
 (defmethod cffi:translate-to-foreign (value (type object-handle))
   (declare (ignore type))
+  value)
+
+(defmethod cffi:translate-to-foreign ((value object) (type object-handle))
+  (declare (ignore type))
   (handle value))
 
 (defmethod cffi:translate-from-foreign (value (type object-handle))

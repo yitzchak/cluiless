@@ -33,6 +33,7 @@
                  (:file "glib")
                  (:file "signal")
                  (:file "application")
+                 (:file "header-bar")
                  (:file "widget")
                  (:file "window")))
              (:file "application")

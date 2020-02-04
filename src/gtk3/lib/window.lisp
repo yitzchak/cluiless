@@ -17,3 +17,7 @@
   (window object-handle)
   (title :string))
 
+(cffi:defcfun ("gtk_window_set_titlebar" :library gtk3) :void
+  (window object-handle)
+  (titlebar object-handle))
+
