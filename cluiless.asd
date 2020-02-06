@@ -32,6 +32,7 @@
                  (:file "object")
                  (:file "glib")
                  (:file "signal")
+                 (:file "image")
                  (:file "application")
                  (:file "header-bar")
                  (:file "widget")
