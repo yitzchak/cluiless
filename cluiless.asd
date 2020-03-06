@@ -20,7 +20,7 @@
          (:file "application")
          (:file "widget")
          (:file "window")
-         (:module gtk3
+         (:module gtk
           :if-feature :unix
           :serial t
           :components

@@ -1,4 +1,4 @@
-(in-package #:cluiless/gtk3)
+(in-package #:cluiless/gtk)
 
 (defparameter *objects* (make-hash-table))
 
@@ -27,7 +27,7 @@
   (declare (ignore type))
   (getobject value))
 
-(cffi:defcfun ("g_object_unref" :library glib2) :void
+(cffi:defcfun ("g_object_unref" :library glib) :void
   (object :pointer))
 
 (defmethod (setf handle) :after (value (instance object))

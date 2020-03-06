@@ -1,4 +1,4 @@
-(in-package #:cluiless/gtk3)
+(in-package #:cluiless/gtk)
 
 (cffi:defcenum gtk-icon-size :unsigned-int
   :invalid
@@ -9,6 +9,6 @@
   :dnd
   :dialog)
 
-(cffi:defcfun ("gtk_image_new_from_icon_name" :library gtk3) :pointer
+(cffi:defcfun ("gtk_image_new_from_icon_name" :library gtk) :pointer
   (icon-name :string)
   (size gtk-icon-size))
