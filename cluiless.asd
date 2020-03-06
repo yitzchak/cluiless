@@ -39,7 +39,8 @@
                  (:file "application")
                  (:file "header-bar")
                  (:file "widget")
-                 (:file "window")))
+                 (:file "window")
+                 (:file "amtk")))
              (:file "application")
              (:file "window")))
          (:module cocoa
