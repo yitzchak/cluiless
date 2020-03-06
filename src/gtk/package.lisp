@@ -1,4 +1,4 @@
-(defpackage #:cluiless/gtk3
+(defpackage #:cluiless/gtk
   (:use #:alexandria #:cl)
   (:export
     :application

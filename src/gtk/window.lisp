@@ -1,4 +1,4 @@
-(in-package #:cluiless/gtk3)
+(in-package #:cluiless/gtk)
 
 (defclass window (cluiless:window object)
   ((header-bar

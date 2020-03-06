@@ -1,16 +1,16 @@
-(in-package #:cluiless/gtk3)
+(in-package #:cluiless/gtk)
 
 (defclass application (cluiless:application object)
   ())
 
-(cluiless:defbackend :gtk3 cluiless/gtk3)
+(cluiless:defbackend :gtk cluiless/gtk)
 
 (cffi:defcallback application-activate-callback :void ((application object-handle) (data :pointer))
   (declare (ignore data))
   (cluiless:activate application))
 
 (defmethod initialize-instance :before ((instance application) &rest initargs &key &allow-other-keys)
-  (cluiless:load-backend-libraries 'gtk3 'glib2)
+  (cluiless:load-backend-libraries 'gtk 'glib)
   (setf (handle instance) (gtk-application-new (getf initargs :name) nil)))
 
 (defmethod initialize-instance :after ((instance application) &rest initargs &key &allow-other-keys)
