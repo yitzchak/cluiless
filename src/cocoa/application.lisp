@@ -4,10 +4,11 @@
   (declare (ignore instance name application))
   t)
 
-(defclass application (cluiless:application object)
+(defclass application (cluiless:application)
   ((delegate-class
      :accessor delegate-class
-     :allocation :class)))
+     :allocation :class))
+  (:metaclass cluiless:object-metaclass))
 
 (cluiless:defbackend :cocoa cluiless/cocoa)
 

@@ -1,7 +1,8 @@
 (in-package #:cluiless/gtk)
 
 (defclass application (cluiless:application object)
-  ())
+  ()
+  (:metaclass cluiless:object-metaclass))
 
 (cluiless:defbackend :gtk cluiless/gtk)
 

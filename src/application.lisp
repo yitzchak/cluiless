@@ -11,7 +11,9 @@
 (defmacro defbackend (name pkg)
   `(push (cons (quote ,name) (quote ,pkg)) *backends*))
 
-(defclass application () ())
+(defclass application (object)
+  ()
+  (:metaclass object-metaclass))
 
 (defmethod initialize-instance :after ((instance application) &rest initargs &key &allow-other-keys)
   (declare (ignore initargs))

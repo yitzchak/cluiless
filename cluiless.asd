@@ -16,7 +16,7 @@
       :serial t
       :components
         ((:file "package")
-         (:file "core")
+         (:file "object")
          (:file "application")
          (:file "widget")
          (:file "window")
@@ -63,7 +63,6 @@
               :serial t
               :components
                 ((:file "base")
-                 (:file "object")
                  (:file "kernel")
                  (:file "message")
                  (:file "window")))

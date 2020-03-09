@@ -9,8 +9,10 @@
      #:make-application
      #:make-window
      #:run
+     #:object
+     #:object-handle
+     #:object-metaclass
      #:title
-     #:ui-metaclass
      #:visible
      #:window
      #:window-by-id

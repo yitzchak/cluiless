@@ -1,9 +1,11 @@
 (in-package #:cluiless/gtk)
 
 (defclass window (cluiless:window object)
-  ((header-bar
+  ((cluiless:title
+     :allocation :virtual)
+   (header-bar
      :accessor header-bar))
-  (:metaclass cluiless:ui-metaclass))
+  (:metaclass cluiless:object-metaclass))
 
 (defmethod initialize-instance :before ((instance window) &rest initargs &key &allow-other-keys)
   (declare (ignore initargs))
@@ -21,8 +23,8 @@
       (gtk-button-set-image m (gtk-image-new-from-icon-name "view-more-symbolic" :large-toolbar))
       (gtk-header-bar-pack-end header-bar m))))
 
-(defmethod closer-mop:slot-value-using-class ((class cluiless:ui-metaclass) (instance window) (slot closer-mop:standard-effective-slot-definition))
-  (if (eql :ui-instance (closer-mop:slot-definition-allocation slot))
+(defmethod closer-mop:slot-value-using-class ((class cluiless:object-metaclass) (instance window) (slot closer-mop:standard-effective-slot-definition))
+  (if (eql :virtual (closer-mop:slot-definition-allocation slot))
     (switch ((closer-mop:slot-definition-name slot) :test #'equal)
       ('cluiless:visible
         (gtk-widget-get-visible instance))
@@ -32,8 +34,8 @@
         (call-next-method)))
     (call-next-method)))
 
-(defmethod (setf closer-mop:slot-value-using-class) (new-value (class cluiless:ui-metaclass) (instance window) (slot closer-mop:standard-effective-slot-definition))
-  (if (eql :ui-instance (closer-mop:slot-definition-allocation slot))
+(defmethod (setf closer-mop:slot-value-using-class) (new-value (class cluiless:object-metaclass) (instance window) (slot closer-mop:standard-effective-slot-definition))
+  (if (eql :virtual (closer-mop:slot-definition-allocation slot))
     (switch ((closer-mop:slot-definition-name slot) :test #'equal)
       ('cluiless:visible
         (gtk-widget-set-visible instance new-value))

@@ -6,7 +6,8 @@
      :initform (make-hash-table))
    (last-id
      :accessor last-id
-     :initform 0)))
+     :initform 0))
+  (:metaclass cluiless:object-metaclass))
 
 (cluiless:defbackend :windows cluiless/windows)
 

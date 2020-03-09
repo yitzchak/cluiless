@@ -1,7 +1,5 @@
 (in-package :cluiless/cocoa)
 
-(defparameter *objects* (make-hash-table))
-
 (cffi:defctype size-t
   #+x86 :uint32
   #+x86-64 :uint64
@@ -17,17 +15,6 @@
   ()
   (:actual-type :pointer)
   (:simple-parser objc-id))
-
-(defun getobject (pointer)
-  (or (gethash (cffi:pointer-address pointer) *objects*) pointer))
-
-(defclass object ()
-  ((handle
-     :accessor handle
-     :initarg :handle)))
-
-(defmethod (setf handle) :after (value (instance object))
-  (setf (gethash (cffi:pointer-address value) *objects*) instance))
 
 (defmethod cffi:translate-to-foreign (value (type objc-id))
   (declare (ignore type))
@@ -52,7 +39,7 @@
 
 (defmethod cffi:translate-from-foreign (value (type objc-id))
   (declare (ignore type))
-  (getobject value))
+  (object value))
 
 (cffi:define-foreign-type sel ()
   ()

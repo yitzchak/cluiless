@@ -1,9 +1,9 @@
 (in-package #:cluiless)
 
-(defclass widget ()
+(defclass widget (object)
   ((visible
      :initarg :visible
      :accessor visible
-     :allocation :ui-instance))
-  (:metaclass ui-metaclass))
+     :allocation :virtual))
+  (:metaclass object-metaclass))
 

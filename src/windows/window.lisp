@@ -2,13 +2,15 @@
 
 (defparameter +window-class-name+ "cluiless/window")
 
-(defclass window (cluiless:window object)
-  ((class-atom
+(defclass window (cluiless:window)
+  ((cluiless:title
+     :allocation :virtual)
+   (class-atom
      :accessor class-atom
      :allocation :class)
    (id
      :accessor id))
-  (:metaclass cluiless:ui-metaclass))
+  (:metaclass cluiless:object-metaclass))
 
 (cffi:defcallback window-proc-callback :long ((instance object-handle) (msg :uint) (wparam :ulong) (lparam :long))
   (cond
@@ -45,8 +47,8 @@
   (declare (ignore initargs))
   (setf (id instance) (add-window cluiless::*application* instance)))
 
-(defmethod closer-mop:slot-value-using-class ((class cluiless:ui-metaclass) (instance window) (slot closer-mop:standard-effective-slot-definition))
-  (if (eql :ui-instance (closer-mop:slot-definition-allocation slot))
+(defmethod closer-mop:slot-value-using-class ((class cluiless:object-metaclass) (instance window) (slot closer-mop:standard-effective-slot-definition))
+  (if (eql :virtual (closer-mop:slot-definition-allocation slot))
     (switch ((closer-mop:slot-definition-name slot) :test #'equal)
       ('cluiless:visible
         (is-window-visible instance))
@@ -57,8 +59,8 @@
         (call-next-method)))
     (call-next-method)))
 
-(defmethod (setf closer-mop:slot-value-using-class) (new-value (class cluiless:ui-metaclass) (instance window) (slot closer-mop:standard-effective-slot-definition))
-  (if (eql :ui-instance (closer-mop:slot-definition-allocation slot))
+(defmethod (setf closer-mop:slot-value-using-class) (new-value (class cluiless:object-metaclass) (instance window) (slot closer-mop:standard-effective-slot-definition))
+  (if (eql :virtual (closer-mop:slot-definition-allocation slot))
     (switch ((closer-mop:slot-definition-name slot) :test #'equal)
       ('cluiless:visible
         (show-window instance (if new-value :show :hide)))

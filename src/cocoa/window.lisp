@@ -5,11 +5,13 @@
   (format t "window-will-close ~A~%" (objc/msg-send notification "object" objc-id))
   (cffi:null-pointer))
 
-(defclass window (cluiless:window object)
-  ((delegate-class
+(defclass window (cluiless:window)
+  ((cluiless:title
+     :allocation :virtual)
+   (delegate-class
      :accessor delegate-class
      :allocation :class))
-  (:metaclass cluiless:ui-metaclass))
+  (:metaclass cluiless:object-metaclass))
 
 (defmethod initialize-instance :before ((instance window) &rest initargs &key &allow-other-keys)
   (declare (ignore initargs))
@@ -33,8 +35,8 @@
 
     (objc/msg-send instance "orderFrontRegardless" :void)))
 
-(defmethod closer-mop:slot-value-using-class ((class cluiless:ui-metaclass) (instance window) (slot closer-mop:standard-effective-slot-definition))
-  (if (eql :ui-instance (closer-mop:slot-definition-allocation slot))
+(defmethod closer-mop:slot-value-using-class ((class cluiless:object-metaclass) (instance window) (slot closer-mop:standard-effective-slot-definition))
+  (if (eql :virtual (closer-mop:slot-definition-allocation slot))
     (switch ((closer-mop:slot-definition-name slot) :test #'equal)
       ('cluiless:visible
         (objc/msg-send instance "isVisible" :boolean))
@@ -44,8 +46,8 @@
         (call-next-method)))
     (call-next-method)))
 
-(defmethod (setf closer-mop:slot-value-using-class) (new-value (class cluiless:ui-metaclass) (instance window) (slot closer-mop:standard-effective-slot-definition))
-  (if (eql :ui-instance (closer-mop:slot-definition-allocation slot))
+(defmethod (setf closer-mop:slot-value-using-class) (new-value (class cluiless:object-metaclass) (instance window) (slot closer-mop:standard-effective-slot-definition))
+  (if (eql :virtual (closer-mop:slot-definition-allocation slot))
     (switch ((closer-mop:slot-definition-name slot) :test #'equal)
       ('cluiless:visible
         (objc/msg-send instance "setIsVisible:" :void :boolean new-value))
