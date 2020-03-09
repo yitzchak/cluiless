@@ -39,8 +39,6 @@
 
 (defgeneric run (instance))
 
-(defgeneric activate (instance))
-
 (defun load-backend-libraries (&rest libraries)
   (dolist (library libraries)
     (unless (cffi:foreign-library-loaded-p library)

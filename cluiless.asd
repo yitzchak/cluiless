@@ -17,6 +17,7 @@
       :components
         ((:file "package")
          (:file "object")
+         (:file "action")
          (:file "application")
          (:file "widget")
          (:file "window")
@@ -32,6 +33,7 @@
                  (:file "object")
                  (:file "glib")
                  (:file "signal")
+                 (:file "action")
                  (:file "image")
                  (:file "menu")
                  (:file "button")
@@ -40,6 +42,7 @@
                  (:file "header-bar")
                  (:file "widget")
                  (:file "window")))
+             (:file "action")
              (:file "application")
              (:file "window")))
          (:module cocoa

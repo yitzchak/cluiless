@@ -1,17 +1,22 @@
 (defpackage #:cluiless
   (:use #:alexandria #:cl)
   (:export
+     #:action
      #:activate
      #:application
      #:backend-error
      #:defbackend
+     #:description
+     #:icon
      #:load-backend-libraries
+     #:make-action
      #:make-application
      #:make-window
-     #:run
+     #:name
      #:object
      #:object-handle
      #:object-metaclass
+     #:run
      #:title
      #:visible
      #:window
