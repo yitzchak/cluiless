@@ -29,3 +29,12 @@
 
 (defmethod cluiless:window-by-id ((instance application) id)
   (gtk-application-get-window-by-id instance id))
+
+(defmethod add-action ((instance application) action)
+  (g-action-map-add-action instance action))
+  
+(defmethod remove-action ((instance application) name)
+  (g-action-map-remove-action instance name))
+  
+(defmethod find-action ((instance application) name)
+  (g-action-map-lookup-action instance name))

@@ -3,10 +3,13 @@
   (:export
      #:action
      #:activate
+     #:add-action
      #:application
      #:backend-error
      #:defbackend
      #:description
+     #:enabled
+     #:find-action
      #:icon
      #:load-backend-libraries
      #:make-action
@@ -16,6 +19,7 @@
      #:object
      #:object-handle
      #:object-metaclass
+     #:remove-action
      #:run
      #:title
      #:visible

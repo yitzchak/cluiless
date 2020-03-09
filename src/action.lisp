@@ -2,6 +2,12 @@
 
 (defgeneric activate (instance))
 
+(defgeneric add-action (instance action))
+
+(defgeneric remove-action (instance name))
+
+(defgeneric find-action (instance name))
+
 (defclass action (object)
   ((name
      :reader name

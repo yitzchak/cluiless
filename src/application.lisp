@@ -52,3 +52,4 @@
 (defgeneric windows (instance))
 
 (defgeneric window-by-id (instance id))
+
