@@ -27,8 +27,7 @@
      :initform nil)
    (enabled
      :accessor enabled
-     :initarg :enabled
-     :initform t)
+     :initarg :enabled)
    (state
      :accessor state
      :initarg :state))

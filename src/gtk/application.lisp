@@ -1,6 +1,6 @@
 (in-package #:cluiless/gtk)
 
-(defclass application (cluiless:application object)
+(defclass application (cluiless:application)
   ()
   (:metaclass cluiless:object-metaclass))
 
@@ -30,11 +30,11 @@
 (defmethod cluiless:window-by-id ((instance application) id)
   (gtk-application-get-window-by-id instance id))
 
-(defmethod add-action ((instance application) action)
+(defmethod cluiless:add-action ((instance application) action)
   (g-action-map-add-action instance action))
   
-(defmethod remove-action ((instance application) name)
+(defmethod cluiless:remove-action ((instance application) name)
   (g-action-map-remove-action instance name))
   
-(defmethod find-action ((instance application) name)
+(defmethod cluiless:find-action ((instance application) name)
   (g-action-map-lookup-action instance name))

@@ -7,10 +7,12 @@
      #:application
      #:backend-error
      #:defbackend
+     #:define-site
      #:description
      #:enabled
      #:find-action
      #:icon
+     #:label
      #:load-backend-libraries
      #:make-action
      #:make-application
@@ -22,6 +24,7 @@
      #:remove-action
      #:run
      #:title
+     #:valid-sites
      #:visible
      #:window
      #:window-by-id

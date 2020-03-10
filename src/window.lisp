@@ -9,4 +9,6 @@
 (defun make-window (&rest initargs &key &allow-other-keys)
   (make-cluiless-instance "WINDOW" initargs))
 
+(defgeneric valid-sites (instance))
 
+(defgeneric define-site (instance site definition))
