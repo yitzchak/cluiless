@@ -69,3 +69,8 @@
       (t
         (call-next-method)))
     (call-next-method)))
+
+(defmethod cluiless:valid-sites ((instance window))
+  nil)
+
+

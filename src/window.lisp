@@ -11,4 +11,7 @@
 
 (defgeneric valid-sites (instance))
 
-(defgeneric define-site (instance site definition))
+(defgeneric append-definitions (instance site &rest definitions))
+
+(defun valid-site-p (instance site)
+  (member site (valid-sites instance) :test #'eql))

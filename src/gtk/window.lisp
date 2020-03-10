@@ -4,28 +4,26 @@
   ((cluiless:title
      :allocation :virtual)
    (header-bar
-     :accessor header-bar
-     :initform nil)
+     :accessor header-bar)
+   (primary-menu-button
+     :accessor primary-menu-button)
    (primary-menu
-     :accessor primary-menu
-     :initform nil))
+     :accessor primary-menu))
   (:metaclass cluiless:object-metaclass))
 
 (defmethod initialize-instance :before ((instance window) &rest initargs &key &allow-other-keys)
   (declare (ignore initargs))
   (setf (handle instance) (gtk-application-window-new cluiless::*application*))
-  (with-slots (header-bar primary-menu) instance
+  (with-slots (header-bar primary-menu-button primary-menu) instance
     (setf header-bar (gtk-header-bar-new))
+    (setf primary-menu-button (gtk-menu-button-new))
+    (setf primary-menu (g-menu-new))
     (gtk-widget-set-visible header-bar t)
     (gtk-header-bar-set-show-close-button header-bar t)
     (gtk-window-set-titlebar instance header-bar)
-    (setf primary-menu (g-menu-new))
-    (let ((m (gtk-menu-button-new)))
-;      (g-menu-append primary-menu "About" "app.about")
-      (gtk-menu-button-set-menu-model m primary-menu)
-      (gtk-widget-set-visible m t)
-      (gtk-button-set-image m (gtk-image-new-from-icon-name "view-more-symbolic" :large-toolbar))
-      (gtk-header-bar-pack-end header-bar m))))
+    (gtk-menu-button-set-menu-model primary-menu-button primary-menu)
+    (gtk-button-set-image primary-menu-button (gtk-image-new-from-icon-name "view-more-symbolic" :large-toolbar))
+    (gtk-header-bar-pack-end header-bar primary-menu-button)))
 
 (defmethod closer-mop:slot-value-using-class ((class cluiless:object-metaclass) (instance window) (slot closer-mop:standard-effective-slot-definition))
   (if (eql :virtual (closer-mop:slot-definition-allocation slot))
@@ -70,15 +68,27 @@
       (gtk-button-set-image m (gtk-image-new-from-icon-name "view-more-symbolic" :large-toolbar))
       (gtk-header-bar-pack-end header-bar m))))
 
-(defun define-menu (instance menu definition)
-  (dolist (def definition)
-    (cond
-      ((stringp def)
-        (let ((action (cluiless:find-action instance def)))
-          (g-menu-append menu (cluiless:label action) (concatenate 'string "win." def)))))))
+(defun append-menu (instance menu definition)
+  (case (getf definition :type :action)
+    (:action
+      (let* ((name (getf definition :name))
+             (action (cluiless:find-action instance name)))
+        (g-menu-append menu (cluiless:label action) (concatenate 'string "win." name))))
+    (:section
+      (let ((section (g-menu-new)))
+        (dolist (def (getf definition :children))
+          (append-menu instance section def))
+        (g-menu-append-section menu (getf definition :label) section)))
+    (:menu
+      (let ((submenu (g-menu-new)))
+        (dolist (def (getf definition :children))
+          (append-menu instance submenu def))
+        (g-menu-append-submenu menu (getf definition :label) submenu)))))
 
-(defmethod cluiless:define-site ((instance window) (site (eql :primary-menu)) definition)
-  (define-menu instance (primary-menu instance) definition))
+(defmethod cluiless:append-definitions ((instance window) (site (eql :primary-menu)) &rest definitions)
+  (gtk-widget-set-visible (primary-menu-button instance) t)
+  (dolist (definition definitions)
+    (append-menu instance (primary-menu instance) definition)))
 
 (defmethod cluiless:add-action ((instance window) action)
   (g-action-map-add-action instance action))

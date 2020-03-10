@@ -41,4 +41,7 @@
   (with-slots (windows) instance
     (remhash id windows)
     (zerop (hash-table-count windows))))
+
+(defmethod cluiless:valid-sites ((instance application))
+  (list :primary-menu))
     

@@ -36,3 +36,6 @@
       (cluiless:activate instance)
       (objc/msg-send instance "run" :void))))
 
+(defmethod cluiless:valid-sites ((instance application))
+  (list :primary-menu))
+

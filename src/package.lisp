@@ -7,7 +7,7 @@
      #:application
      #:backend-error
      #:defbackend
-     #:define-site
+     #:append-definitions
      #:description
      #:enabled
      #:find-action
@@ -25,6 +25,7 @@
      #:run
      #:title
      #:valid-sites
+     #:valid-site-p
      #:visible
      #:window
      #:window-by-id

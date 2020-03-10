@@ -2,7 +2,6 @@
 
 (cffi:defcallback window-will-close :pointer ((instance objc-id) (name sel) (notification :pointer))
   (declare (ignore instance name))
-  (format t "window-will-close ~A~%" (objc/msg-send notification "object" objc-id))
   (cffi:null-pointer))
 
 (defclass window (cluiless:window)
@@ -56,3 +55,7 @@
       (t
         (call-next-method)))
     (call-next-method)))
+
+(defmethod cluiless:valid-sites ((instance window))
+  nil)
+

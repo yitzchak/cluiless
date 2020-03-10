@@ -1,5 +1,7 @@
 (in-package #:cluiless/gtk)
 
+(defgeneric activate-action (action parameter target))
+
 (defclass action (cluiless:action)
   ((cluiless:name
      :allocation :virtual)

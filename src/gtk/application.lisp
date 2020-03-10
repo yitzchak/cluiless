@@ -38,3 +38,7 @@
   
 (defmethod cluiless:find-action ((instance application) name)
   (g-action-map-lookup-action instance name))
+  
+(defmethod cluiless:valid-sites ((instance application))
+  nil)
+
