@@ -27,6 +27,9 @@
 
     (setf handle (objc/msg-send "NSApplication" "sharedApplication"))
 
+    (objc/msg-send instance "setActivationPolicy:" ns-application-activation-policy
+      ns-application-activation-policy :regular)
+
     (objc/msg-send instance "setDelegate:" :pointer
       objc-id (objc/msg-send delegate-class "new" :pointer))))
 
