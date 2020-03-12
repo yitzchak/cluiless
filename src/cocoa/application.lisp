@@ -53,11 +53,11 @@
                     "addItemWithTitle:action:keyEquivalent:"
                     :pointer
                     ns-string (cluiless:label action)
-                    :pointer (cffi:null-pointer)
-                    ns-string "")))))
-        ; (objc/msg-send item "setTarget:"
-        ;   :pointer
-        ;   objc-id (objc/msg-send instance "delegate"))))
+                    sel "activate"
+                    ns-string "")))
+        (objc/msg-send item "setTarget:"
+          :pointer
+          objc-id action)))
     ; (:section
     ;   (let ((section (g-menu-new)))
     ;     (dolist (def (getf definition :children))

@@ -20,7 +20,10 @@
    (accelerators
      :accessor accelerators
      :initarg :accelerators
-     :initform nil))
+     :initform nil)
+   (target
+     :accessor target
+     :initarg :target))
   (:metaclass object-metaclass))
 
 (defun make-action (&rest initargs &key &allow-other-keys)

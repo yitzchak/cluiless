@@ -72,8 +72,8 @@
   (case (getf definition :type :action)
     (:action
       (let* ((name (getf definition :name))
-             (target (if (eql (getf definition :target :window) :window) "win" "app"))
-             (action (cluiless:find-action name)))
+             (action (cluiless:find-action name))
+             (target (if (eql :application (cluiless:target action)) "app" "win")))
         (g-menu-append menu (cluiless:label action) (format nil "~A.~A" target name))))
     (:section
       (let ((section (g-menu-new)))
