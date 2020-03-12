@@ -4,6 +4,6 @@
   ()
   (:metaclass cluiless:object-metaclass))
 
-(defclass action (cluiless:action-sink)
+(defclass action-sink (cluiless:action-sink)
   ()
   (:metaclass cluiless:object-metaclass))

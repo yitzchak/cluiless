@@ -27,7 +27,7 @@
 
     (setf handle (objc/msg-send "NSApplication" "sharedApplication"))
 
-    (objc/msg-send instance "setActivationPolicy:" ns-application-activation-policy
+    (objc/msg-send instance "setActivationPolicy:" :bool
       ns-application-activation-policy :regular)
 
     (objc/msg-send instance "setDelegate:" :pointer
@@ -37,6 +37,7 @@
   (trivial-main-thread:with-body-in-main-thread ()
     (float-features:with-float-traps-masked t
       (cluiless:activate instance)
+      (objc/msg-send instance "activateIgnoringOtherApps:" :void :bool t)
       (objc/msg-send instance "run" :void))))
 
 (defmethod cluiless:valid-sites ((instance application))
