@@ -12,8 +12,19 @@
   `(push (cons (quote ,name) (quote ,pkg)) *backends*))
 
 (defclass application (object)
-  ()
+  ((actions
+     :accessor actions
+     :initform (make-hash-table :test #'eql)))
   (:metaclass object-metaclass))
+
+(defun add-action (action)
+  (setf (gethash (name action) (actions *application*)) action))
+
+(defun remove-action (name)
+  (remhash name (actions *application*)))
+
+(defun find-action (name)
+  (gethash name (actions *application*)))
 
 (defmethod initialize-instance :after ((instance application) &rest initargs &key &allow-other-keys)
   (declare (ignore initargs))

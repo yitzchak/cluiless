@@ -18,7 +18,7 @@
         ((:file "package")
          (:file "object")
          (:file "action")
-         (:file "action-map")
+         (:file "action-sink-map")
          (:file "application")
          (:file "widget")
          (:file "window")

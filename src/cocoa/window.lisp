@@ -4,7 +4,7 @@
   (declare (ignore instance name notification))
   (cffi:null-pointer))
 
-(defclass window (cluiless:window cluiless:action-map)
+(defclass window (cluiless:window cluiless:action-sink-map)
   ((cluiless:title
      :allocation :virtual)
    (delegate-class

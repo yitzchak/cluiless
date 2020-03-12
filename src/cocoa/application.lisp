@@ -4,7 +4,7 @@
   (declare (ignore instance name application))
   t)
 
-(defclass application (cluiless:application cluiless:action-map)
+(defclass application (cluiless:application cluiless:action-sink-map)
   ((delegate-class
      :accessor delegate-class
      :allocation :class))
@@ -43,7 +43,7 @@
   (case (getf definition :type :action)
     (:action
       (let* ((name (getf definition :name))
-             (action (cluiless:find-action instance name))
+             (action (cluiless:find-action name))
              (item (objc/msg-send
                     menu
                     "addItemWithTitle:action:keyEquivalent:"

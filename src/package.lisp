@@ -2,10 +2,12 @@
   (:use #:alexandria #:cl)
   (:export
      #:action
-     #:action-map
+     #:action-sink
+     #:action-sink-map
      #:activate
      #:activate-action
      #:add-action
+     #:add-action-sink
      #:application
      #:backend-error
      #:defbackend
@@ -13,10 +15,12 @@
      #:description
      #:enabled
      #:find-action
+     #:find-action-sink
      #:icon
      #:label
      #:load-backend-libraries
      #:make-action
+     #:make-action-sink
      #:make-application
      #:make-window
      #:name
@@ -24,6 +28,7 @@
      #:object-handle
      #:object-metaclass
      #:remove-action
+     #:remove-action-sink
      #:run
      #:target
      #:title

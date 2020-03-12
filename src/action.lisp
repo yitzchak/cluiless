@@ -4,12 +4,6 @@
 
 (defgeneric activate (instance))
 
-(defgeneric add-action (instance action))
-
-(defgeneric remove-action (instance name))
-
-(defgeneric find-action (instance name))
-
 (defclass action (object)
   ((name
      :reader name
@@ -26,7 +20,16 @@
    (accelerators
      :accessor accelerators
      :initarg :accelerators
-     :initform nil)
+     :initform nil))
+  (:metaclass object-metaclass))
+
+(defun make-action (&rest initargs &key &allow-other-keys)
+  (make-cluiless-instance "ACTION" initargs))
+
+(defclass action-sink (object)
+  ((name
+     :reader name
+     :initarg :name)
    (enabled
      :accessor enabled
      :initarg :enabled)
@@ -38,6 +41,13 @@
      :initarg :target))
   (:metaclass object-metaclass))
 
-(defun make-action (&rest initargs &key &allow-other-keys)
-  (make-cluiless-instance "ACTION" initargs))
+(defun make-action-sink (&rest initargs &key &allow-other-keys)
+  (make-cluiless-instance "ACTION-SINK" initargs))
+
+(defgeneric add-action-sink (instance action-sink))
+
+(defgeneric remove-action-sink (instance name-sink))
+
+(defgeneric find-action-sink (instance name-sink))
+
 

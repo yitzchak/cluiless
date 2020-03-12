@@ -1,6 +1,6 @@
 (in-package :cluiless/windows)
 
-(defclass application (cluiless:application cluiless:action-map)
+(defclass application (cluiless:application cluiless:action-sink-map)
   ((windows
      :reader windows
      :initform (make-hash-table))

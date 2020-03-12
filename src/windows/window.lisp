@@ -2,7 +2,7 @@
 
 (defparameter +window-class-name+ "cluiless/window")
 
-(defclass window (cluiless:window cluiless:action-map)
+(defclass window (cluiless:window cluiless:action-sink-map)
   ((cluiless:title
      :allocation :virtual)
    (class-atom

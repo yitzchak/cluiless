@@ -30,14 +30,14 @@
 (defmethod cluiless:window-by-id ((instance application) id)
   (gtk-application-get-window-by-id instance id))
 
-(defmethod cluiless:add-action ((instance application) action)
-  (g-action-map-add-action instance action)
-  (setf (cluiless:target action) instance))
+(defmethod cluiless:add-action-sink ((instance application) action-sink)
+  (g-action-map-add-action instance action-sink)
+  (setf (cluiless:target action-sink) instance))
   
-(defmethod cluiless:remove-action ((instance application) name)
+(defmethod cluiless:remove-action-sink ((instance application) name)
   (g-action-map-remove-action instance name))
   
-(defmethod cluiless:find-action ((instance application) name)
+(defmethod cluiless:find-action-sink ((instance application) name)
   (g-action-map-lookup-action instance name))
   
 (defmethod cluiless:valid-sites ((instance application))
