@@ -26,13 +26,14 @@
       (objc/msg-send (objc/msg-send "NSWindow" "alloc" :pointer) "initWithContentRect:styleMask:backing:defer:"
         :pointer
         (:struct ns-rect) '(:origin (:x 10.0d0 :y 10.0d0) :size (:width 640.0d0 :height 480.0d0))
-        ns-window-style-mask '(:titled :closable :resizable)
+        ns-window-style-mask '(:titled :closable :resizable :miniaturizable)
         ns-backing-store-type '(:buffered)))
 
     (objc/msg-send instance "setDelegate:" :pointer
       objc-id (objc/msg-send delegate-class "new" :pointer))
 
-    (objc/msg-send instance "orderFrontRegardless" :void)))
+    (objc/msg-send instance "orderFrontRegardless" :void)
+    (objc/msg-send instance "makeKeyAndOrderFront:" :void :pointer (cffi:null-pointer))))
 
 (defmethod closer-mop:slot-value-using-class ((class cluiless:object-metaclass) (instance window) (slot closer-mop:standard-effective-slot-definition))
   (if (eql :virtual (closer-mop:slot-definition-allocation slot))
