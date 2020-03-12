@@ -2,7 +2,9 @@
   (:use #:alexandria #:cl)
   (:export
      #:action
+     #:action-map
      #:activate
+     #:activate-action
      #:add-action
      #:application
      #:backend-error
@@ -23,6 +25,7 @@
      #:object-metaclass
      #:remove-action
      #:run
+     #:target
      #:title
      #:valid-sites
      #:valid-site-p

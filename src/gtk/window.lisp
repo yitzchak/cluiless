@@ -72,8 +72,9 @@
   (case (getf definition :type :action)
     (:action
       (let* ((name (getf definition :name))
+             (target (if (eql (getf definition :target :window) :window) "win" "app"))
              (action (cluiless:find-action instance name)))
-        (g-menu-append menu (cluiless:label action) (concatenate 'string "win." name))))
+        (g-menu-append menu (cluiless:label action) (format nil "~A.~A" target name))))
     (:section
       (let ((section (g-menu-new)))
         (dolist (def (getf definition :children))
@@ -91,7 +92,8 @@
     (append-menu instance (primary-menu instance) definition)))
 
 (defmethod cluiless:add-action ((instance window) action)
-  (g-action-map-add-action instance action))
+  (g-action-map-add-action instance action)
+  (setf (cluiless:target action) instance))
 
 (defmethod cluiless:remove-action ((instance window) name)
   (g-action-map-remove-action instance name))

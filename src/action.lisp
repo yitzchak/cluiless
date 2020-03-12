@@ -1,5 +1,7 @@
 (in-package #:cluiless)
 
+(defgeneric activate-action (name instance parameter))
+
 (defgeneric activate (instance))
 
 (defgeneric add-action (instance action))
@@ -30,7 +32,10 @@
      :initarg :enabled)
    (state
      :accessor state
-     :initarg :state))
+     :initarg :state)
+   (target
+     :accessor target
+     :initarg :target))
   (:metaclass object-metaclass))
 
 (defun make-action (&rest initargs &key &allow-other-keys)

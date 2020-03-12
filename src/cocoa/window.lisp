@@ -1,10 +1,10 @@
 (in-package #:cluiless/cocoa)
 
 (cffi:defcallback window-will-close :pointer ((instance objc-id) (name sel) (notification :pointer))
-  (declare (ignore instance name))
+  (declare (ignore instance name notification))
   (cffi:null-pointer))
 
-(defclass window (cluiless:window)
+(defclass window (cluiless:window cluiless:action-map)
   ((cluiless:title
      :allocation :virtual)
    (delegate-class

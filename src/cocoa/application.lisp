@@ -4,7 +4,7 @@
   (declare (ignore instance name application))
   t)
 
-(defclass application (cluiless:application)
+(defclass application (cluiless:application cluiless:action-map)
   ((delegate-class
      :accessor delegate-class
      :allocation :class))
@@ -37,5 +37,47 @@
       (objc/msg-send instance "run" :void))))
 
 (defmethod cluiless:valid-sites ((instance application))
-  (list :primary-menu))
+  (list :menu-bar))
+
+(defun append-menu (instance menu definition)
+  (case (getf definition :type :action)
+    (:action
+      (let* ((name (getf definition :name))
+             (action (cluiless:find-action instance name))
+             (item (objc/msg-send
+                    menu
+                    "addItemWithTitle:action:keyEquivalent:"
+                    :pointer
+                    :string (cluiless:label action)
+                    :pointer (cffi:null-pointer)
+                    :string "")))))
+        ; (objc/msg-send item "setTarget:"
+        ;   :pointer
+        ;   objc-id (objc/msg-send instance "delegate"))))
+    ; (:section
+    ;   (let ((section (g-menu-new)))
+    ;     (dolist (def (getf definition :children))
+    ;       (append-menu instance section def))
+    ;     (g-menu-append-section menu (getf definition :label) section)))
+    (:menu
+      (let* ((item (objc/msg-send
+                    menu
+                    "addItemWithTitle:action:keyEquivalent:"
+                    :pointer
+                    :string (getf definition :label)
+                    :pointer (cffi:null-pointer)
+                    :string ""))
+             (submenu (objc/msg-send
+                        (objc/msg-send "NSMenu" "alloc" :pointer)
+                        "initWithTitle:"
+                        :pointer
+                        :string (getf definition :label))))
+        (dolist (def (getf definition :children))
+          (append-menu instance submenu def))
+        (objc/msg-send item "setSubmenu:" :pointer :pointer submenu)))))
+
+(defmethod cluiless:append-definitions ((instance application) (site (eql :menu-bar)) &rest definitions)
+  (let ((main-menu (objc/msg-send "NSApplication" "mainMenu")))
+    (dolist (definition definitions)
+      (append-menu instance main-menu definition))))
 

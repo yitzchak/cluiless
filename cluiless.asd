@@ -18,6 +18,7 @@
         ((:file "package")
          (:file "object")
          (:file "action")
+         (:file "action-map")
          (:file "application")
          (:file "widget")
          (:file "window")

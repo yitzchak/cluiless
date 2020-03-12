@@ -1,7 +1,5 @@
 (in-package #:cluiless/gtk)
 
-(defgeneric activate-action (action parameter target))
-
 (defclass action (cluiless:action)
   ((cluiless:name
      :allocation :virtual)
@@ -11,7 +9,7 @@
 
 (cffi:defcallback action-activate-callback :void ((action object-handle) (parameter :pointer) (data :pointer))
   (declare (ignore parameter data))
-  (cluiless:activate action))
+  (cluiless:activate-action (cluiless:name action) action nil))
 
 (defmethod initialize-instance :before ((instance action) &rest initargs &key &allow-other-keys)
   (setf (handle instance)
