@@ -57,6 +57,7 @@
                  (:file "objective-c")
                  (:file "foundation")
                  (:file "window")))
+             (:file "action")
              (:file "application")
              (:file "window")))
          (:module windows
@@ -70,6 +71,7 @@
                  (:file "kernel")
                  (:file "message")
                  (:file "window")))
+             (:file "action")
              (:file "application")
              (:file "window")))))))
 
