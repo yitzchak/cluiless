@@ -48,9 +48,9 @@
                     menu
                     "addItemWithTitle:action:keyEquivalent:"
                     :pointer
-                    :string (cluiless:label action)
+                    ns-string (cluiless:label action)
                     :pointer (cffi:null-pointer)
-                    :string "")))))
+                    ns-string "")))))
         ; (objc/msg-send item "setTarget:"
         ;   :pointer
         ;   objc-id (objc/msg-send instance "delegate"))))
@@ -64,14 +64,14 @@
                     menu
                     "addItemWithTitle:action:keyEquivalent:"
                     :pointer
-                    :string (getf definition :label)
+                    ns-string (getf definition :label)
                     :pointer (cffi:null-pointer)
-                    :string ""))
+                    ns-string ""))
              (submenu (objc/msg-send
                         (objc/msg-send "NSMenu" "alloc" :pointer)
                         "initWithTitle:"
                         :pointer
-                        :string (getf definition :label))))
+                        ns-string (getf definition :label))))
         (dolist (def (getf definition :children))
           (append-menu instance submenu def))
         (objc/msg-send item "setSubmenu:" :pointer :pointer submenu)))))
@@ -83,7 +83,7 @@
                         (objc/msg-send "NSMenu" "alloc" :pointer)
                         "initWithTitle:"
                         :pointer
-                        :string ""))
+                        ns-string ""))
       (objc/msg-send instance "setMainMenu:" :pointer :pointer main-menu))
     (dolist (definition definitions)
       (append-menu instance main-menu definition))))
