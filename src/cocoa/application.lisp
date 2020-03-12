@@ -77,7 +77,14 @@
         (objc/msg-send item "setSubmenu:" :pointer :pointer submenu)))))
 
 (defmethod cluiless:append-definitions ((instance application) (site (eql :menu-bar)) &rest definitions)
-  (let ((main-menu (objc/msg-send "NSApplication" "mainMenu")))
+  (let ((main-menu (objc/msg-send instance "mainMenu")))
+    (when (cffi:null-pointer-p main-menu)
+      (setq main-menu (objc/msg-send
+                        (objc/msg-send "NSMenu" "alloc" :pointer)
+                        "initWithTitle:"
+                        :pointer
+                        :string ""))
+      (objc/msg-send instance "setMainMenu:" :pointer :pointer main-menu))
     (dolist (definition definitions)
       (append-menu instance main-menu definition))))
 
