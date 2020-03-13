@@ -17,3 +17,7 @@
 (cffi:defbitfield ns-backing-store-type
   (:buffered #x2))
 
+(def-objc-method nil "orderFrontRegardless" :void)
+
+(def-objc-method nil "makeKeyAndOrderFront:" :void
+  (sender :pointer))

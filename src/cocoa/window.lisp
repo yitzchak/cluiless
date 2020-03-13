@@ -29,11 +29,11 @@
         ns-window-style-mask '(:titled :closable :resizable :miniaturizable)
         ns-backing-store-type '(:buffered)))
 
-    (objc/msg-send instance "setDelegate:" :void
-      objc-id (objc/msg-send delegate-class "new" :pointer))
+    (setf (delegate instance)
+      (objc/msg-send delegate-class "new" :pointer))
 
-    (objc/msg-send instance "orderFrontRegardless" :void)
-    (objc/msg-send instance "makeKeyAndOrderFront:" :void :pointer (cffi:null-pointer))))
+    (order-front-regardless instance)
+    (make-key-and-order-front= (cffi:null-pointer))))
 
 (defmethod closer-mop:slot-value-using-class ((class cluiless:object-metaclass) (instance window) (slot closer-mop:standard-effective-slot-definition))
   (if (eql :virtual (closer-mop:slot-definition-allocation slot))
