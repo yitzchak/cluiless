@@ -33,7 +33,7 @@
       (objc/msg-send delegate-class "new" :pointer))
 
     (order-front-regardless instance)
-    (make-key-and-order-front= (cffi:null-pointer))))
+    (make-key-and-order-front= instance (cffi:null-pointer))))
 
 (defmethod closer-mop:slot-value-using-class ((class cluiless:object-metaclass) (instance window) (slot closer-mop:standard-effective-slot-definition))
   (if (eql :virtual (closer-mop:slot-definition-allocation slot))
