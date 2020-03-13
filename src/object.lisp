@@ -49,6 +49,10 @@
   (declare (ignore type))
   (object value))
 
-(defmethod (setf handle) :after (pointer (instance object))
-  (setf (object pointer) instance))
-          
+;(defmethod (setf handle) :after (pointer (instance object))
+;  (setf (object pointer) instance))
+
+(defmethod (setf closer-mop:slot-value-using-class) :after (new-value (class cluiless:object-metaclass) (instance object) (slot closer-mop:standard-effective-slot-definition))
+  (when (equal 'handle (closer-mop:slot-definition-name slot))
+    (setf (object new-value) instance)))
+
