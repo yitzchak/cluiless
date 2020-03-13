@@ -13,3 +13,5 @@
 (def-objc-property nil "activationPolicy" ns-application-activation-policy :bool)
 
 (def-objc-property nil "delegate")
+
+(def-objc-property nil "mainMenu")

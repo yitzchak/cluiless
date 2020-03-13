@@ -17,6 +17,13 @@
 (cffi:defbitfield ns-backing-store-type
   (:buffered #x2))
 
+(def-objc-method "NSWindow" "alloc")
+
+(def-objc-method nil "initWithContentRect:styleMask:backing:defer:" :pointer
+  (content-rect (:struct ns-rect))
+  (style ns-window-style-mask)
+  (backing ns-backing-store-type))
+
 (def-objc-method nil "orderFrontRegardless" :void)
 
 (def-objc-method nil "makeKeyAndOrderFront:" :void

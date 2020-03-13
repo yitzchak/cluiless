@@ -56,6 +56,7 @@
                 ((:file "base")
                  (:file "objective-c")
                  (:file "foundation")
+                 (:file "menu")
                  (:file "application")
                  (:file "window")))
              (:file "action")

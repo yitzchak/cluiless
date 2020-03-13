@@ -26,15 +26,15 @@
       (objc/register-class-pair delegate-class))
 
     (setf handle (ns-application/shared-application))
-    (setf (activation-policy instance) :regular)
-    (setf (delegate instance)
+    (setf (~/activation-policy instance) :regular)
+    (setf (~/delegate instance)
       (objc/msg-send delegate-class "new" :pointer))))
 
 (defmethod cluiless:run ((instance application))
   (trivial-main-thread:with-body-in-main-thread ()
     (float-features:with-float-traps-masked t
       (cluiless:activate instance)
-      (activate-ignoring-other-apps= instance t)
+      (~/activate-ignoring-other-apps= instance t)
 ;      (objc/msg-send instance "activateIgnoringOtherApps:" :void :bool t)
       (objc/msg-send instance "run" :void))))
 
@@ -46,47 +46,29 @@
     (:action
       (let* ((name (getf definition :name))
              (action (cluiless:find-action name))
-             (item (objc/msg-send
-                    menu
-                    "addItemWithTitle:action:keyEquivalent:"
-                    :pointer
-                    ns-string (cluiless:label action)
-                    sel "activate"
-                    ns-string "")))
-        (objc/msg-send item "setTarget:"
-          :void
-          objc-id action)))
+             (item (~/add-item-with-title=action=key-equivalent=
+                     menu (cluiless:label action)
+                     "activate" "")))
+        (setf (~/target item) action)))
     ; (:section
     ;   (let ((section (g-menu-new)))
     ;     (dolist (def (getf definition :children))
     ;       (append-menu instance section def))
     ;     (g-menu-append-section menu (getf definition :label) section)))
     (:menu
-      (let* ((item (objc/msg-send
-                    menu
-                    "addItemWithTitle:action:keyEquivalent:"
-                    :pointer
-                    ns-string (getf definition :label)
-                    :pointer (cffi:null-pointer)
-                    ns-string ""))
-             (submenu (objc/msg-send
-                        (objc/msg-send "NSMenu" "alloc" :pointer)
-                        "initWithTitle:"
-                        :pointer
-                        ns-string (getf definition :label))))
+      (let* ((item (~/add-item-with-title=action=key-equivalent=
+                     menu (getf definition :label)
+                     (cffi:null-pointer) ""))
+             (submenu (~/init-with-title= (ns-menu/alloc) (getf definition :label))))
         (dolist (def (getf definition :children))
           (append-menu instance submenu def))
-        (objc/msg-send item "setSubmenu:" :void :pointer submenu)))))
+        (setf (~/submenu item) submenu)))))
 
 (defmethod cluiless:append-definitions ((instance application) (site (eql :menu-bar)) &rest definitions)
-  (let ((main-menu (objc/msg-send instance "mainMenu")))
+  (let ((main-menu (~/main-menu instance)))
     (when (cffi:null-pointer-p main-menu)
-      (setq main-menu (objc/msg-send
-                        (objc/msg-send "NSMenu" "alloc" :pointer)
-                        "initWithTitle:"
-                        :pointer
-                        ns-string ""))
-      (objc/msg-send instance "setMainMenu:" :void :pointer main-menu))
+      (setq main-menu (~/init-with-title= (ns-menu/alloc) ""))
+      (setf (~/main-menu instance) main-menu))
     (dolist (definition definitions)
       (append-menu instance main-menu definition))))
 

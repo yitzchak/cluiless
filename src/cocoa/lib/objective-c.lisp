@@ -122,10 +122,7 @@
          ,retval))))
 
 (defun method-name (instance selector)
-  (lispify-name
-    (if instance
-      (concatenate 'string instance "/" selector)
-      selector)))
+  (lispify-name (concatenate 'string (or instance "~") "/" selector)))
 
 (defmacro def-objc-method (instance selector &optional (return-type 'objc-id) &rest args)
   `(defun ,(method-name instance selector) (,@(unless instance '(instance))  ,@(mapcar #'car args))

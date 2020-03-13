@@ -23,17 +23,17 @@
       (objc/register-class-pair delegate-class))
 
     (setf handle
-      (objc/msg-send (objc/msg-send "NSWindow" "alloc" :pointer) "initWithContentRect:styleMask:backing:defer:"
-        :pointer
-        (:struct ns-rect) '(:origin (:x 10.0d0 :y 10.0d0) :size (:width 640.0d0 :height 480.0d0))
-        ns-window-style-mask '(:titled :closable :resizable :miniaturizable)
-        ns-backing-store-type '(:buffered)))
+      (~/init-with-content-rect=style-mask=backing=defer=
+        (ns-window/alloc)
+        '(:origin (:x 10.0d0 :y 10.0d0) :size (:width 640.0d0 :height 480.0d0))
+        '(:titled :closable :resizable :miniaturizable)
+        '(:buffered)))
 
-    (setf (delegate instance)
+    (setf (~/delegate instance)
       (objc/msg-send delegate-class "new" :pointer))
 
-    (order-front-regardless instance)
-    (make-key-and-order-front= instance (cffi:null-pointer))))
+    (~/order-front-regardless instance)
+    (~/make-key-and-order-front= instance (cffi:null-pointer))))
 
 (defmethod closer-mop:slot-value-using-class ((class cluiless:object-metaclass) (instance window) (slot closer-mop:standard-effective-slot-definition))
   (if (eql :virtual (closer-mop:slot-definition-allocation slot))
