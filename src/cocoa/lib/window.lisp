@@ -29,6 +29,6 @@
 (def-objc-method nil "makeKeyAndOrderFront:" :void
   (sender :pointer))
 
-(def-objc-property nil "visible" :bool)
+(def-objc-property nil "isVisible" :bool)
 
 (def-objc-property nil "title" ns-string)

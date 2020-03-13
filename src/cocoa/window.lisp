@@ -39,7 +39,7 @@
   (if (eql :virtual (closer-mop:slot-definition-allocation slot))
     (switch ((closer-mop:slot-definition-name slot) :test #'equal)
       ('cluiless:visible
-        (~/visible instance))
+        (~/is-visible instance))
       ('cluiless:title
         (~/title instance))
       (t
@@ -50,7 +50,7 @@
   (if (eql :virtual (closer-mop:slot-definition-allocation slot))
     (switch ((closer-mop:slot-definition-name slot) :test #'equal)
       ('cluiless:visible
-        (setf (~/visible instance) new-value))
+        (setf (~/is-visible instance) new-value))
       ('cluiless:title
         (setf (~/title instance) new-value))
       (t
