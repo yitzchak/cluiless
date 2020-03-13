@@ -18,7 +18,12 @@
   (:darwin (:framework "Foundation"))
   (t (:or)))
 
+(defun lispify-name (name)
+  (cffi:translate-camelcase-name
+    (substitute #\= #\: (substitute #\/ #\_ name))
+    :special-words '("NS")))
+
 (defmethod cffi:translate-name-from-foreign ((spec string) (package (eql *package*)) &optional varp)
-  (let ((name (cffi:translate-camelcase-name (substitute #\/ #\_ spec) :special-words '("NS"))))
+  (let ((name (lispify-name spec)))
     (if varp (intern (format nil "*~a*" name)) name)))
 

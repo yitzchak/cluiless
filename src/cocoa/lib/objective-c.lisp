@@ -121,6 +121,14 @@
          ,@args
          ,retval))))
 
+(defmacro def-objc-method (instance selector &optional (return-type 'objc-id) &rest args)
+  (let ((name (lispify-name
+                (if instance
+                  (concatenate 'string instance "/" selector)
+                  selector))))
+    `(defun ,name (,@(unless instance '(instance))  ,@(mapcar #'car args))
+       (objc/msg-send ,(or instance 'instance) ,selector ,return-type ,@(mapcan #'reverse args)))))
+
 (cffi:defcfun ("method_getTypeEncoding" :library objc) :string
   (meth :pointer))
 

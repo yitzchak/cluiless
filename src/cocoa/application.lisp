@@ -25,7 +25,7 @@
         (cffi:callback application-should-terminate-after-last-window-closed) "c@:@")
       (objc/register-class-pair delegate-class))
 
-    (setf handle (objc/msg-send "NSApplication" "sharedApplication"))
+    (setf handle (ns-application/shared-application))
 
     (objc/msg-send instance "setActivationPolicy:" :bool
       ns-application-activation-policy :regular)
@@ -37,7 +37,8 @@
   (trivial-main-thread:with-body-in-main-thread ()
     (float-features:with-float-traps-masked t
       (cluiless:activate instance)
-      (objc/msg-send instance "activateIgnoringOtherApps:" :void :bool t)
+      (activate-ignoring-other-apps= instance t)
+;      (objc/msg-send instance "activateIgnoringOtherApps:" :void :bool t)
       (objc/msg-send instance "run" :void))))
 
 (defmethod cluiless:valid-sites ((instance application))
