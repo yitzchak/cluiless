@@ -21,7 +21,7 @@
 (defun lispify-name (name)
   (cffi:translate-camelcase-name
     (substitute #\= #\: (substitute #\/ #\_ name))
-    :special-words '("NS")))
+    :special-words '("NS" "UTF8" "~/NS" "~/UTF8")))
 
 (defmethod cffi:translate-name-from-foreign ((spec string) (package (eql *package*)) &optional varp)
   (let ((name (lispify-name spec)))

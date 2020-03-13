@@ -29,8 +29,7 @@
         '(:titled :closable :resizable :miniaturizable)
         '(:buffered)))
 
-    (setf (~/delegate instance)
-      (objc/msg-send delegate-class "new" :pointer))
+    (setf (~/delegate instance) (~/new delegate-class))
 
     (~/order-front-regardless instance)
     (~/make-key-and-order-front= instance (cffi:null-pointer))))

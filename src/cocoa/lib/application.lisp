@@ -15,3 +15,7 @@
 (def-objc-property nil "delegate")
 
 (def-objc-property nil "mainMenu")
+
+(def-objc-method nil "run" :void)
+
+(def-objc-method nil "keyWindow")

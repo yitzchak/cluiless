@@ -27,16 +27,14 @@
 
     (setf handle (ns-application/shared-application))
     (setf (~/activation-policy instance) :regular)
-    (setf (~/delegate instance)
-      (objc/msg-send delegate-class "new" :pointer))))
+    (setf (~/delegate instance) (~/new delegate-class))))
 
 (defmethod cluiless:run ((instance application))
   (trivial-main-thread:with-body-in-main-thread ()
     (float-features:with-float-traps-masked t
       (cluiless:activate instance)
       (~/activate-ignoring-other-apps= instance t)
-;      (objc/msg-send instance "activateIgnoringOtherApps:" :void :bool t)
-      (objc/msg-send instance "run" :void))))
+      (~/run instance))))
 
 (defmethod cluiless:valid-sites ((instance application))
   (list :menu-bar))

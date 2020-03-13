@@ -17,7 +17,7 @@
     (cluiless:find-action-sink
       (if (eql :application (cluiless:target instance))
         cluiless::*application*
-        (objc/msg-send cluiless::*application* "keyWindow"))
+        (~/key-window cluiless::*application*))
       (cluiless:name instance))
     nil))
 
@@ -32,5 +32,5 @@
         (cffi:callback action-activate-callback) "v@:")
       (objc/register-class-pair objc-class))
 
-    (setf handle (objc/msg-send objc-class "new" :pointer))))
+    (setf handle (~/new objc-class))))
 

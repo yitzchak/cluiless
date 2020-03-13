@@ -17,18 +17,22 @@
   (:actual-type :pointer)
   (:simple-parser ns-string))
 
+(def-objc-method "NSString" "stringWithUTF8String:" :pointer
+  (value :string))
+
+(def-objc-method nil "UTF8String" :string)
+
 (defmethod cffi:translate-to-foreign (value (type ns-string))
   (declare (ignore type))
   value)
 
 (defmethod cffi:translate-to-foreign ((value string) (type ns-string))
   (declare (ignore type))
-  (objc/msg-send "NSString" "stringWithUTF8String:"
-    :pointer
-    :string value))
+  (ns-string/string-with-utf8-string= value))
 
 (defmethod cffi:translate-from-foreign (value (type ns-string))
   (declare (ignore type))
-  (cffi:foreign-string-to-lisp (objc/msg-send value "UTF8String" :pointer) :encoding :utf-8))
+  (cffi:foreign-string-to-lisp (~/utf8-string value) :encoding :utf-8))
 
+(def-objc-method nil "new")
 

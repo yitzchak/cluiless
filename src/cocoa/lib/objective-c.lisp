@@ -152,3 +152,4 @@
 
 (cffi:defcfun ("objc_registerClassPair" :library objc) :void
   (cls objc-id))
+
