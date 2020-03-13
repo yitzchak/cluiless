@@ -39,9 +39,9 @@
   (if (eql :virtual (closer-mop:slot-definition-allocation slot))
     (switch ((closer-mop:slot-definition-name slot) :test #'equal)
       ('cluiless:visible
-        (objc/msg-send instance "isVisible" :boolean))
+        (~/visible instance))
       ('cluiless:title
-        (objc/msg-send instance "title" ns-string))
+        (~/title instance))
       (t
         (call-next-method)))
     (call-next-method)))
@@ -50,9 +50,9 @@
   (if (eql :virtual (closer-mop:slot-definition-allocation slot))
     (switch ((closer-mop:slot-definition-name slot) :test #'equal)
       ('cluiless:visible
-        (objc/msg-send instance "setIsVisible:" :void :boolean new-value))
+        (setf (~/visible instance) new-value))
       ('cluiless:title
-        (objc/msg-send instance "setTitle:" :void ns-string new-value))
+        (setf (~/title instance) new-value))
       (t
         (call-next-method)))
     (call-next-method)))
