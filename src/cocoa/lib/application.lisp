@@ -8,4 +8,8 @@
 (def-objc-method nil "activateIgnoringOtherApps:" :void
   (flag :bool))
 
-(def-objc-method "NSApplication" "sharedApplication" objc-id)
+(def-objc-method "NSApplication" "sharedApplication")
+
+(def-objc-property nil "activationPolicy" ns-application-activation-policy :bool)
+
+(def-objc-property nil "delegate")

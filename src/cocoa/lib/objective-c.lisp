@@ -121,13 +121,25 @@
          ,@args
          ,retval))))
 
+(defun method-name (instance selector)
+  (lispify-name
+    (if instance
+      (concatenate 'string instance "/" selector)
+      selector)))
+
 (defmacro def-objc-method (instance selector &optional (return-type 'objc-id) &rest args)
-  (let ((name (lispify-name
-                (if instance
-                  (concatenate 'string instance "/" selector)
-                  selector))))
-    `(defun ,name (,@(unless instance '(instance))  ,@(mapcar #'car args))
-       (objc/msg-send ,(or instance 'instance) ,selector ,return-type ,@(mapcan #'reverse args)))))
+  `(defun ,(method-name instance selector) (,@(unless instance '(instance))  ,@(mapcar #'car args))
+     (objc/msg-send ,(or instance 'instance) ,selector ,return-type ,@(mapcan #'reverse args))))
+
+(defmacro def-objc-property (instance selector &optional (parameter-type 'objc-id) (return-type :void))
+  (let ((name (method-name instance selector))
+        (set-selector (format nil "set~(~A~)~A:" (subseq selector 0 1) (subseq selector 1))))
+    `(progn
+       (defun ,name (,@(unless instance '(instance)))
+         (objc/msg-send ,(or instance 'instance) ,selector ,parameter-type))
+       (defun (setf ,name) (new-value ,@(unless instance '(instance)))
+         (objc/msg-send ,(or instance 'instance) ,set-selector ,return-type ,parameter-type new-value)))))
+
 
 (cffi:defcfun ("method_getTypeEncoding" :library objc) :string
   (meth :pointer))

@@ -26,12 +26,9 @@
       (objc/register-class-pair delegate-class))
 
     (setf handle (ns-application/shared-application))
-
-    (objc/msg-send instance "setActivationPolicy:" :bool
-      ns-application-activation-policy :regular)
-
-    (objc/msg-send instance "setDelegate:" :void
-      objc-id (objc/msg-send delegate-class "new" :pointer))))
+    (setf (activation-policy instance) :regular)
+    (setf (delegate instance)
+      (objc/msg-send delegate-class "new" :pointer))))
 
 (defmethod cluiless:run ((instance application))
   (trivial-main-thread:with-body-in-main-thread ()
