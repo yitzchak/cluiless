@@ -29,7 +29,7 @@
         ns-window-style-mask '(:titled :closable :resizable :miniaturizable)
         ns-backing-store-type '(:buffered)))
 
-    (objc/msg-send instance "setDelegate:" :pointer
+    (objc/msg-send instance "setDelegate:" :void
       objc-id (objc/msg-send delegate-class "new" :pointer))
 
     (objc/msg-send instance "orderFrontRegardless" :void)

@@ -30,7 +30,7 @@
     (objc/msg-send instance "setActivationPolicy:" :bool
       ns-application-activation-policy :regular)
 
-    (objc/msg-send instance "setDelegate:" :pointer
+    (objc/msg-send instance "setDelegate:" :void
       objc-id (objc/msg-send delegate-class "new" :pointer))))
 
 (defmethod cluiless:run ((instance application))
@@ -56,7 +56,7 @@
                     sel "activate"
                     ns-string "")))
         (objc/msg-send item "setTarget:"
-          :pointer
+          :void
           objc-id action)))
     ; (:section
     ;   (let ((section (g-menu-new)))
@@ -78,7 +78,7 @@
                         ns-string (getf definition :label))))
         (dolist (def (getf definition :children))
           (append-menu instance submenu def))
-        (objc/msg-send item "setSubmenu:" :pointer :pointer submenu)))))
+        (objc/msg-send item "setSubmenu:" :void :pointer submenu)))))
 
 (defmethod cluiless:append-definitions ((instance application) (site (eql :menu-bar)) &rest definitions)
   (let ((main-menu (objc/msg-send instance "mainMenu")))
@@ -88,7 +88,7 @@
                         "initWithTitle:"
                         :pointer
                         ns-string ""))
-      (objc/msg-send instance "setMainMenu:" :pointer :pointer main-menu))
+      (objc/msg-send instance "setMainMenu:" :void :pointer main-menu))
     (dolist (definition definitions)
       (append-menu instance main-menu definition))))
 
