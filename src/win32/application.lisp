@@ -1,4 +1,4 @@
-(in-package :cluiless/windows)
+(in-package :cluiless/win32)
 
 (defclass application (cluiless:application cluiless:action-sink-map)
   ((windows
@@ -9,7 +9,7 @@
      :initform 0))
   (:metaclass cluiless:object-metaclass))
 
-(cluiless:defbackend :windows cluiless/windows)
+(cluiless:defbackend :win32 cluiless/win32)
 
 (defmethod initialize-instance :before ((instance application) &rest initargs &key &allow-other-keys)
   (declare (ignore initargs))

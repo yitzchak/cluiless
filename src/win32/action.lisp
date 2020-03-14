@@ -1,4 +1,4 @@
-(in-package #:cluiless/windows)
+(in-package #:cluiless/win32)
 
 (defclass action (cluiless:action)
   ()

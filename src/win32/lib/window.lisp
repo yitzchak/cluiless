@@ -1,4 +1,4 @@
-(in-package #:cluiless/windows)
+(in-package #:cluiless/win32)
 
 (defparameter +color-active-border+ 10)
 (defparameter +color-active-caption+ 2)

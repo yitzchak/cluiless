@@ -1,4 +1,4 @@
-(in-package #:cluiless/windows)
+(in-package #:cluiless/win32)
 
 (cffi:defcstruct point
   (x :long)

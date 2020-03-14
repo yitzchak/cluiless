@@ -62,7 +62,7 @@
              (:file "action")
              (:file "application")
              (:file "window")))
-         (:module windows
+         (:module win32
           :serial t
           :components
             ((:file "package")

@@ -1,4 +1,4 @@
-(in-package #:cluiless/windows)
+(in-package #:cluiless/win32)
 
 (cffi:define-foreign-library user32
   (:win32 (:default "user32"))
