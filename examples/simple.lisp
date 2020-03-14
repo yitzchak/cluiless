@@ -12,8 +12,8 @@
         (cluiless:append-definitions
           app :menu-bar
           '(:type :menu :label "Simple" :children ((:type :action :name :about)))))
-      ((cluiless:valid-site-p win :primary-menu)
-        (cluiless:append-definitions win :primary-menu '(:type :action :name :about)))
+      ((cluiless:valid-site-p win :menu)
+        (cluiless:append-definitions win :menu '(:type :action :name :about)))
       ((cluiless:valid-site-p win :menu-bar)
         (cluiless:append-definitions
           win :menu-bar

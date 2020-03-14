@@ -43,5 +43,5 @@
     (zerop (hash-table-count windows))))
 
 (defmethod cluiless:valid-sites ((instance application))
-  (list :primary-menu))
+  nil)
     
