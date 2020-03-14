@@ -36,3 +36,9 @@
 
 (def-objc-method nil "new")
 
+(def-objc-method nil "release")
+
+(def-objc-method nil "retain")
+
+(defmethod cluiless:release ((backend (eql :cocoa)) handle)
+  (~/release handle))

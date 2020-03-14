@@ -56,3 +56,17 @@
   (when (equal 'handle (closer-mop:slot-definition-name slot))
     (setf (object new-value) instance)))
 
+(defgeneric release (backend handle)
+  (:method (backend handle)
+    (declare (ignore backend handle))))
+
+(defmethod initialize-instance :after ((instance object) &rest initargs &key &allow-other-keys)
+  (declare (ignore initargs))
+  (when (slot-boundp instance 'handle)
+    (when-let ((handle (handle instance)))
+      (unless (cffi:null-pointer-p handle)
+        (trivial-garbage:finalize instance
+          (lambda ()
+            (release *backend* handle)))))))
+
+

@@ -27,6 +27,7 @@
      #:object
      #:object-handle
      #:object-metaclass
+     #:release
      #:remove-action
      #:remove-action-sink
      #:run
