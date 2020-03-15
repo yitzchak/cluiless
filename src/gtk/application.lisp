@@ -43,3 +43,8 @@
 (defmethod cluiless:valid-sites ((instance application))
   nil)
 
+(defmethod cluiless:activate-action (name (instance application) parameter)
+  (g-action-group-activate-action instance name (or parameter (cffi:null-pointer))))
+
+(defmethod cluiless:active-window ((instance application))
+  (gtk-application-get-active-window instance))

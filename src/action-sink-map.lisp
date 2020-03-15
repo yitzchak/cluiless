@@ -15,3 +15,6 @@
 (defmethod cluiless:find-action-sink ((instance action-sink-map) name)
   (gethash name (action-sinks instance)))
 
+(defmethod activate-action (name (instance action-sink-map) parameter)
+  (when-let ((sink (find-action-sink instance name)))
+    (activate-action name sink parameter)))

@@ -12,14 +12,7 @@
 
 (cffi:defcallback action-activate-callback :void ((instance objc-id) (name sel))
   (declare (ignore name))
-  (cluiless:activate-action
-    (cluiless:name instance)
-    (cluiless:find-action-sink
-      (if (eql :application (cluiless:target instance))
-        cluiless::*application*
-        (~/key-window cluiless::*application*))
-      (cluiless:name instance))
-    nil))
+  (cluiless:activate-action (cluiless:name instance) instance nil))
 
 (defmethod initialize-instance :before ((instance action) &rest initargs &key &allow-other-keys)
   (declare (ignore initargs))

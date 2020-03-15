@@ -35,3 +35,5 @@
   (application object-handle)
   (id :unsigned-int))
 
+(cffi:defcfun ("gtk_application_get_active_window" :library gtk) object-handle
+  (application object-handle))

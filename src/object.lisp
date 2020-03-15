@@ -43,7 +43,9 @@
 
 (defmethod cffi:translate-to-foreign ((value object) (type object-handle))
   (declare (ignore type))
-  (handle value))
+  (if (slot-boundp value 'handle)
+    (handle value)
+    (cffi:null-pointer)))
 
 (defmethod cffi:translate-from-foreign (value (type object-handle))
   (declare (ignore type))

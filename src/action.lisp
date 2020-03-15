@@ -53,4 +53,19 @@
 
 (defgeneric find-action-sink (instance name-sink))
 
+(defgeneric active-window (instance))
+
+(defmethod activate-action (name (instance action) parameter)
+  (activate-action name
+                   (if (eql :application (target instance))
+                     *application*
+                     (active-window *application*))
+                   parameter))
+
+(defmethod activate-action (name (instance (eql nil)) parameter)
+  (when-let ((action (find-action name)))
+    (activate-action name
+                     action
+                     parameter)))
+
 

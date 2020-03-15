@@ -43,3 +43,7 @@
   (action-map object-handle)
   (action-name action-name))
 
+(cffi:defcfun ("g_action_group_activate_action" :library gio) :void
+  (action-group object-handle)
+  (action-name action-name)
+  (parameter :pointer))

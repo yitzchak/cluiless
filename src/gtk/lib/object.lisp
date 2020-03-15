@@ -1,5 +1,14 @@
 (in-package #:cluiless/gtk)
 
+(cffi:defcfun ("g_object_new_with_properties" :library glib) :pointer
+  (object-type size-t)
+  (n-properties :uint)
+  (names :pointer)
+  (values :pointer))
+
+(defparameter +g-object-none+ 1)
+(defparameter +g-type-object+ 80)
+
 (cffi:defcfun ("g_object_unref" :library glib) :void
   (object :pointer))
 

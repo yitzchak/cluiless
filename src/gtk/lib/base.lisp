@@ -12,4 +12,9 @@
 (cffi:define-foreign-library gmodule
   (T (:default "libgmodule-2.0")))
 
+(cffi:defctype size-t
+  #+x86 :uint32
+  #+x86-64 :uint64
+  #-(or x86-64 x86) :long)
+
 

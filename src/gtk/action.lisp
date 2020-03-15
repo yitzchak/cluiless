@@ -15,6 +15,10 @@
   (declare (ignore parameter data))
   (cluiless:activate-action (cluiless:name action) action nil))
 
+(defmethod initialize-instance :before ((instance action) &rest initargs &key &allow-other-keys)
+  (setf (handle instance)
+        (g-object-new-with-properties +g-type-object+ 0 (cffi:null-pointer) (cffi:null-pointer))))
+
 (defmethod initialize-instance :before ((instance action-sink) &rest initargs &key &allow-other-keys)
   (setf (handle instance)
         (g-simple-action-new (getf initargs :name) (cffi:null-pointer))))

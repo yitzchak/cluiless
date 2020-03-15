@@ -48,7 +48,7 @@
     (call-next-method)))
 
 (defmethod cluiless:valid-sites ((instance window))
-  (list :menu))
+  (list :menu :tool-bar))
 
 (defun ensure-header-bar (instance)
   (with-slots (header-bar) instance
@@ -91,6 +91,38 @@
   (dolist (definition definitions)
     (append-menu instance (menu instance) definition)))
 
+(cffi:defcallback button-clicked-callback :void ((button object-handle) (action object-handle))
+  (declare (ignore data))
+  (cluiless:activate-action (cluiless:name action) action nil))
+
+(defun append-header-bar (instance header-bar definition)
+  (case (getf definition :type :action)
+    (:action
+      (let* ((name (getf definition :name))
+             (action (cluiless:find-action name))
+             (target (if (eql :application (cluiless:target action)) "app" "win"))
+             (button (gtk-button-new-with-label (cluiless:label action))))
+        (gtk-widget-set-visible button t)
+        (g-signal-connect-data button "clicked" (cffi:callback button-clicked-callback)
+          action (cffi:null-pointer) nil)
+        (if (eql (getf definition :location :start) :start)
+          (gtk-header-bar-pack-start header-bar button)
+          (gtk-header-bar-pack-end header-bar button))))))
+    ; (:section
+    ;   (let ((section (g-menu-new)))
+    ;     (dolist (def (getf definition :children))
+    ;       (append-menu instance section def))
+    ;     (g-menu-append-section menu (getf definition :label) section)))
+    ; (:menu
+    ;   (let ((submenu (g-menu-new)))
+    ;     (dolist (def (getf definition :children))
+    ;       (append-menu instance submenu def))
+    ;     (g-menu-append-submenu menu (getf definition :label) submenu)))))
+
+(defmethod cluiless:append-definitions ((instance window) (site (eql :tool-bar)) &rest definitions)
+  (dolist (definition definitions)
+    (append-header-bar instance (header-bar instance) definition)))
+
 (defmethod cluiless:add-action-sink ((instance window) action-sink)
   (g-action-map-add-action instance action-sink)
   (setf (cluiless:target action-sink) instance))
@@ -100,3 +132,6 @@
 
 (defmethod cluiless:find-action-sink ((instance window) name)
   (g-action-map-lookup-action instance name))
+
+(defmethod cluiless:activate-action (name (instance window) parameter)
+  (g-action-group-activate-action instance name (or parameter (cffi:null-pointer))))

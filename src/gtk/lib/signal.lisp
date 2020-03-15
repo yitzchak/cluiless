@@ -8,7 +8,7 @@
   (instance object-handle)
   (signal :string)
   (handler :pointer)
-  (data :pointer)
+  (data object-handle)
   (destroy :pointer)
   (flags g-connect-flags))
 

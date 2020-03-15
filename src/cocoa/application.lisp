@@ -70,3 +70,5 @@
     (dolist (definition definitions)
       (append-menu instance main-menu definition))))
 
+(defmethod cluiless:active-window ((instance application))
+  (~/key-window instance))

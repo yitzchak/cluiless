@@ -6,6 +6,7 @@
      #:action-sink-map
      #:activate
      #:activate-action
+     #:active-window
      #:add-action
      #:add-action-sink
      #:application

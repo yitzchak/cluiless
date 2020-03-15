@@ -12,3 +12,4 @@
 (cffi:defcfun ("gtk_menu_button_set_menu_model" :library gtk) :void
   (menu-button object-handle)
   (menu-model :pointer))
+
