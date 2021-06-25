@@ -11,14 +11,14 @@
   (with-slots (header-bar) instance
     (setf header-bar (gtk-header-bar-new))
     (gtk-widget-set-visible header-bar t)
-    (gtk-header-bar-set-show-close-button header-bar t)
+    (gtk-header-bar-set-show-title-buttons header-bar t)
     (gtk-window-set-titlebar instance header-bar)
     (let ((m (gtk-menu-button-new))
           (q (g-menu-new)))
       (g-menu-append q "About" "app.about")
       (gtk-menu-button-set-menu-model m q)
       (gtk-widget-set-visible m t)
-      (gtk-button-set-image m (gtk-image-new-from-icon-name "view-more-symbolic" :large-toolbar))
+      (gtk-menu-button-set-icon-name m "view-more-symbolic")
       (gtk-header-bar-pack-end header-bar m))))
 
 (defmethod closer-mop:slot-value-using-class ((class cluiless:ui-metaclass) (instance window) (slot closer-mop:standard-effective-slot-definition))

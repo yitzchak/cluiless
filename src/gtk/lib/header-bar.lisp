@@ -31,11 +31,11 @@
   (bar object-handle)
   (child object-handle))
 
-(cffi:defcfun ("gtk_header_bar_set_show_close_button" :library gtk) :void
+(cffi:defcfun ("gtk_header_bar_set_show_title_buttons" :library gtk) :void
   (bar object-handle)
   (setting :boolean))
 
-(cffi:defcfun ("gtk_header_bar_get_show_close_button" :library gtk) :boolean
+(cffi:defcfun ("gtk_header_bar_get_show_title_buttons" :library gtk) :boolean
   (bar object-handle))
 
 
